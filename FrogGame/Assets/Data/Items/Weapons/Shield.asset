@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71f4699d32b3b3e48b4185e9ff2a87f0, type: 3}
+  m_Name: Shield
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: 480b901d1f4f5b34183b11cb136a207b, type: 3}
+  itemName: Shield
+  modelPrefab: {fileID: 354853550223953691, guid: 95db639331c7a4a4cbe7729c517d28bb, type: 3}
+  isUnarmed: 0
+  weaponAnimator: {fileID: 0}
+  offHandIdleAnimation: Left Arm Idle_01
+  weaponType: 4
+  baseDamage: 25
+  criticalDamageMultiplier: 4
+  physicalDamageAbsorption: 90
+  poiseBreak: 25
+  offensivePoiseBonus: 0
+  baseStamina: 0
+  lightAttackMultiplier: 0
+  heavyAttackMultiplier: 0
+  tap_RB_Action: {fileID: 0}
+  hold_RB_Action: {fileID: 0}
+  tap_LB_Action: {fileID: 0}
+  hold_LB_Action: {fileID: 11400000, guid: 97bfad31f24213346a95dd659748be09, type: 2}
+  tap_RT_Action: {fileID: 0}
+  hold_RT_Action: {fileID: 0}
+  tap_LT_Action: {fileID: 11400000, guid: 23f3c2822f55e674e8712f74d1eb260c, type: 2}
+  hold_LT_Action: {fileID: 0}

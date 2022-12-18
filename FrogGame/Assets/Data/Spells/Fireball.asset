@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d0415587e186af4db7482ec55f45bbe, type: 3}
+  m_Name: Fireball
+  m_EditorClassIdentifier: 
+  itemIcon: {fileID: 21300000, guid: 8f0d830284752284cb943aa2d9334675, type: 3}
+  itemName: Fireball
+  spellWarmUpFx: {fileID: 193574, guid: 5c2bdcf6f0badc34f9f192b0995e4a79, type: 3}
+  spellCastFx: {fileID: 458163408933589880, guid: 4ba890b154911a0439b1634bd3172474, type: 3}
+  focusPointCost: 0
+  spellAnimation: Spell_Throw_Start
+  isFaithSpell: 0
+  isMagicSpell: 0
+  isPyroSpell: 1
+  spellDescription: 
+  baseDamage: 75
+  projectileVelocity: 500
+  projectileUpwardVelocity: 150
+  projectileMass: 25
+  isAffectedByGravity: 1

@@ -9,6 +9,7 @@ public class BossCombatStanceState : CombatStanceState
     public EnemyAttackAction[] secondPhaseAttacks;
     protected override void GetNewAttack(EnemyManager enemyManager)
     {
+
         if(hasPhaseShifted)
         {
             Vector3 targetDirection = enemyManager.currentTarget.transform.position - transform.position;

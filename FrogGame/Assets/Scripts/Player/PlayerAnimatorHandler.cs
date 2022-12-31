@@ -79,18 +79,18 @@ public class PlayerAnimatorHandler : CharacterAnimatorHandler
     
     private void OnAnimatorMove()
     {
-        if(character.isInteracting == false)
+       /* if(character.isInteracting == false)
         {
             return;
         }
 
         float delta = Time.deltaTime;
-        player.playerLocomotionManager.rigidbody.drag = 0f;
+        player.playerLocomotionManager.GetComponent<Rigidbody>().drag = 0f;
         Vector3 deltaPosition = player.animator.deltaPosition;
 
         deltaPosition.y = 0;
 
         Vector3 velocity = deltaPosition / delta;
-        player.playerLocomotionManager.rigidbody.velocity = velocity;
+        player.playerLocomotionManager.GetComponent<Rigidbody>().velocity = velocity;*/
     }
 }

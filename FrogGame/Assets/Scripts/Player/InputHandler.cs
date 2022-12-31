@@ -406,7 +406,7 @@ public class InputHandler : MonoBehaviour
     private void HandleInventoryInput()
     {
        
-        if(inventory_Input)
+       /* if(inventory_Input)
         {
             inventoryFlag = !inventoryFlag;
             if(inventoryFlag)
@@ -422,6 +422,7 @@ public class InputHandler : MonoBehaviour
                 player.uiManager.hudWindow.SetActive(true);
             }
         }
+        */
     }
     private void HandleLockOnInput()
     {
@@ -469,7 +470,7 @@ public class InputHandler : MonoBehaviour
 
         }
 
-        player.cameraHandler.SetCameraHeight();
+        //player.cameraHandler.SetCameraHeight();
     }
 
     private void HandleTwoHandedInput()

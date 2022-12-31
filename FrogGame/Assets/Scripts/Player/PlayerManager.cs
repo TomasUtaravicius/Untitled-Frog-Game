@@ -59,8 +59,8 @@ public class PlayerManager : CharacterManager
         float delta = Time.fixedDeltaTime;
 
         
-        playerLocomotionManager.HandleMovement();
-        playerLocomotionManager.HandleRotation();
+        //playerLocomotionManager.HandleMovement();
+       // playerLocomotionManager.HandleRotation();
         if (cameraHandler != null)
         {
             
@@ -91,24 +91,24 @@ public class PlayerManager : CharacterManager
      
 
         inputHandler.TickInput();
-        playerLocomotionManager.HandleRollingAndSprinting();
-        playerLocomotionManager.HandleFalling(playerLocomotionManager.moveDirection);
-        playerLocomotionManager.HandleJumping();
+        //playerLocomotionManager.HandleRollingAndSprinting();
+        //playerLocomotionManager.HandleFalling(playerLocomotionManager.moveDirection);
+        //playerLocomotionManager.HandleJumping();
         playerStatsManager.RegenerateStamina();
 
        
 
-        CheckForInteractable();
+        //CheckForInteractable();
     }
     private void LateUpdate()
     {
         ResetFlags();
         ResetInputs();
   
-        if(isInAir)
+        /*if(isInAir)
         {
             playerLocomotionManager.inAirTimer += Time.deltaTime;
-        }
+        }*/
         
     }
     private void ResetFlags()
@@ -169,6 +169,6 @@ public class PlayerManager : CharacterManager
     {
         transform.position = playerStandsHereWhenOpeningChest.transform.position;
         playerAnimatorHandler.PlayTargetAnimation("Open Chest", true);
-        playerLocomotionManager.rigidbody.velocity = Vector3.zero;
+        //playerLocomotionManager.GetComponent<Rigidbody>().velocity = Vector3.zero;
     }
 }

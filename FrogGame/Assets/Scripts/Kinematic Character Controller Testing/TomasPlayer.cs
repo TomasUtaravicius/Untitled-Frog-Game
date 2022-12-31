@@ -8,7 +8,7 @@ public class TomasPlayer : MonoBehaviour
 {
     public ExampleCharacterCamera OrbitCamera;
     public Transform CameraFollowPoint;
-    public TomasCharacterController Character;
+    public PlayerLocomotionManager Character;
 
     private const string MouseXInput = "Mouse X";
     private const string MouseYInput = "Mouse Y";

@@ -66,6 +66,15 @@ public class CharacterAnimatorHandler : MonoBehaviour
         character.animator.SetBool("IsMirrored", mirrorAnim);
         character.animator.CrossFade(targetAnim, 0.2f);
     }
+    public void PlayTargetAnimation(string targetAnim, bool isInteracting, float timer, bool canRotate = false, bool mirrorAnim = false)
+    {
+        character.animator.SetBool("CanRotate", canRotate);
+        character.animator.applyRootMotion = isInteracting;
+        character.animator.SetBool("IsInteracting", isInteracting);
+        character.animator.SetBool("IsMirrored", mirrorAnim);
+        character.animator.CrossFade(targetAnim, timer);
+    }
+
     public void PlayTargetAnimationWithRootRotation(string targetAnim, bool isInteracting, bool canRotate = false)
     {
         character.animator.SetBool("IsRotatingWithRootMotion", true);

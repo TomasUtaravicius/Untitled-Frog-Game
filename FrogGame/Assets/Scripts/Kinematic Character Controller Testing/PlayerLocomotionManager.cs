@@ -184,7 +184,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
             if(hasJumped)
             {
 
-                if (airTime > 0.8f && !isFalling)
+                if (airTime > 0.9f && !isFalling)
                 {
                     isFalling = true;
                     Debug.LogWarning("Falling");

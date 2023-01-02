@@ -27,10 +27,10 @@ public class PlayerStatsManager : CharacterStatsManager
         currentHealth = maxHealth;
         currentFocusPoints = maxFocusPoints;
 
-        //healthBar.SetMaxHealth(maxHealth);
-        //staminaBar.SetMaxStamina(maxStamina);
-        //focusPointBar.SetMaxFocusPoints(maxFocusPoints);
-        //focusPointBar.SetCurrentFocusPoints(currentFocusPoints);
+        healthBar.SetMaxHealth(maxHealth);
+        staminaBar.SetMaxStamina(maxStamina);
+        focusPointBar.SetMaxFocusPoints(maxFocusPoints);
+        focusPointBar.SetCurrentFocusPoints(currentFocusPoints);
     }
     public override void HandlePoiseResetTimer()
     {

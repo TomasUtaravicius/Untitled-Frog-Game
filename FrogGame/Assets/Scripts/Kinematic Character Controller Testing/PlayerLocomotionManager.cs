@@ -74,6 +74,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
 
     public PlayerManager player;
     public Vector3 movementVector;
+    private Vector3 _internalVelocityAdd = Vector3.zero;
     private void Start()
     {
         // Assign to motor
@@ -165,6 +166,8 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
             // Smooth movement Velocity
             if(player.isInteracting)
             {
+                //return;
+                //currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity, 1 - Mathf.Exp(-StableMovementSharpness * deltaTime));
                 currentVelocity = Vector3.zero;
             }
             else
@@ -228,6 +231,10 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
         _timeSinceJumpRequested += deltaTime;
         if (_jumpRequested)
         {
+            if (player.isInteracting)
+            {
+                return;
+            }
             // See if we actually are allowed to jump
             if (!_jumpConsumed && ((AllowJumpingWhenSliding ? Motor.GroundingStatus.FoundAnyGround : Motor.GroundingStatus.IsStableOnGround) || _timeSinceLastAbleToJump <= JumpPostGroundingGraceTime))
             {
@@ -253,7 +260,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
 
                 if (movementVector.magnitude > 0.5f)
                 {
-                    player.playerAnimatorHandler.PlayTargetAnimation("Running Jump", true);
+                    player.playerAnimatorHandler.PlayTargetAnimation("Running Jump", false);
                     player.playerAnimatorHandler.EraseHandIKForWeapon();
                     Debug.Log("Running Jump");
                 }
@@ -261,11 +268,17 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
                 else
                 {
                     Debug.Log("Simple Jump");
-                    player.playerAnimatorHandler.PlayTargetAnimation("Jump", true);
+                    player.playerAnimatorHandler.PlayTargetAnimation("Jump", false);
                     player.playerAnimatorHandler.EraseHandIKForWeapon();
                 }
 
             }
+        }
+        // Take into account additive velocity
+        if (_internalVelocityAdd.sqrMagnitude > 0f)
+        {
+            currentVelocity += _internalVelocityAdd;
+            _internalVelocityAdd = Vector3.zero;
         }
     }
 
@@ -364,6 +377,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
 
     public void AddVelocity(Vector3 velocity)
     {
+        _internalVelocityAdd += velocity;
     }
 
     public void ProcessHitStabilityReport(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, Vector3 atCharacterPosition, Quaternion atCharacterRotation, ref HitStabilityReport hitStabilityReport)

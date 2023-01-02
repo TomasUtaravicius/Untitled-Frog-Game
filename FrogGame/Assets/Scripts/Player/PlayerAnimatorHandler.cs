@@ -87,7 +87,6 @@ public class PlayerAnimatorHandler : CharacterAnimatorHandler
         float delta = Time.deltaTime;
         Vector3 deltaPosition = player.animator.deltaPosition;
         Vector3 velocity = deltaPosition / delta;
-        Debug.LogWarning("Giving velocity of: " + velocity);
         player.playerLocomotionManager.AddVelocity(velocity);
     }
 }

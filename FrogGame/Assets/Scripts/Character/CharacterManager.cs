@@ -52,6 +52,8 @@ public class CharacterManager : MonoBehaviour
 
     [Header("Player Flags")]
     public bool isInteracting;
+    public bool isInCombat;
+    public bool isArmed;
 
     
 

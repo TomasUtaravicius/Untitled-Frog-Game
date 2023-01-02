@@ -30,9 +30,17 @@ public class PlayerManager : CharacterManager
     public GameObject interactableUIGameObject;
     public GameObject itemInteractableGameObject;
 
+    public LayerMask detectionLayer;
+    public LayerMask layerBlockingLineOfSight;
+
+    public float stayInCombatTimer;
+    private float lastCombatTimer;
+    public bool isDrawing;
+
     protected override void Awake()
     {
         base.Awake();
+        isInCombat = false;
         cameraHandler = FindObjectOfType<CameraHandler>();
         backstabCollider = GetComponentInChildren<CriticalDamageCollider>();
 
@@ -55,7 +63,8 @@ public class PlayerManager : CharacterManager
 
     protected override void FixedUpdate()
     {
-        base.FixedUpdate();
+        //base.FixedUpdate();
+        playerAnimatorHandler.CheckHandIKWeight(playerWeaponSlotManager.rightHandIKTarget, playerWeaponSlotManager.leftHandIKTarget, isTwoHanding);
         float delta = Time.fixedDeltaTime;
 
         
@@ -86,8 +95,8 @@ public class PlayerManager : CharacterManager
         animator.SetBool("IsDead", isDead);
         animator.SetBool("IsInAir", isInAir);
         animator.SetBool("IsBlocking", isBlocking);
-        animator.SetBool("IsTwoHanding", isTwoHanding);
-       
+
+        animator.SetBool("IsTwoHanding", isArmed);
      
 
         inputHandler.TickInput();
@@ -96,6 +105,7 @@ public class PlayerManager : CharacterManager
         //playerLocomotionManager.HandleJumping();
         playerStatsManager.RegenerateStamina();
 
+        HandleInCombatState();
        
 
         //CheckForInteractable();
@@ -125,6 +135,100 @@ public class PlayerManager : CharacterManager
         inputHandler.a_Input = false;
         inputHandler.jump_Input = false;
         inputHandler.inventory_Input = false;
+    }
+    public void HandleInCombatState()
+    {
+        if (isInCombat)
+        {
+            if(!isArmed)
+            {
+                if (isDrawing)
+                    return;
+                DrawSword();
+            }
+            lastCombatTimer = Time.time;
+        }
+        isInCombat = CheckForEnemies();
+
+        if(isArmed && !isInCombat)
+        {
+            if(Time.time>=lastCombatTimer+stayInCombatTimer)
+            {
+                SheathSword();
+            }
+        }
+    }
+    public void DrawSword()
+    {
+        playerAnimatorHandler.PlayTargetAnimation("Draw Sword 1", false);
+        isDrawing = true;
+        isArmed = true;
+    }
+    public void SheathSword()
+    {
+        Debug.LogWarning("Sheating Sword");
+        playerAnimatorHandler.PlayTargetAnimation("Sheath Sword 1", false);
+        isArmed = false;
+    }
+    public void TakeSword()
+    {
+        playerWeaponSlotManager.LoadBothWeaponsOnSlots();
+        isDrawing = false;
+    }
+    public void PutBackSword()
+    {
+        playerWeaponSlotManager.LoadBothWeaponsOnSlots();
+    }
+    public bool CheckForEnemies()
+    {
+        //Player ID is 1
+        //Enemy ID is 0
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 15f, detectionLayer);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            CharacterManager targetCharacter = colliders[i].transform.GetComponent<CharacterManager>();
+
+
+            if (targetCharacter.gameObject.name != gameObject.name)
+            {
+                if (targetCharacter != null)
+                {
+
+                    if (targetCharacter.characterStatsManager.teamIDNumber == 1)
+                    {
+                        return true;
+                    }
+                    if (targetCharacter.characterStatsManager.teamIDNumber == characterStatsManager.teamIDNumber)
+                    {
+                        return false;
+                    }
+                    if (targetCharacter.isDead)
+                        return false;
+
+                    /*Vector3 targetDirection = targetCharacter.transform.position - transform.position;
+                    float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
+
+                    //if potential target is found it has to be standing infront of the AI's field of view
+                    if (viewableAngle > aiCharacter.minimumDetectionAngle && viewableAngle < aiCharacter.maximimumDetectionAngle)
+                    {
+                        //If our potential target has an obstacle in between, don't do anything
+                        if (Physics.Linecast(aiCharacter.lockOnTransform.position, targetCharacter.lockOnTransform.position, layerBlockingLineOfSight))
+                        {
+                            return this;
+                        }
+                        else
+                        {
+                            aiCharacter.currentTarget = targetCharacter;
+                        }
+
+                    }*/
+                }
+            }
+
+        }
+        return false;
     }
     public void CheckForInteractable()
     {

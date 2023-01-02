@@ -28,7 +28,7 @@ public class CharacterWeaponSlotManager : MonoBehaviour
 
         LoadWeaponHolderSlots();
     }
-    protected virtual void LoadWeaponHolderSlots()
+    public virtual void LoadWeaponHolderSlots()
     {
         WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
         foreach (WeaponHolderSlot weaponSlot in weaponHolderSlots)
@@ -49,7 +49,6 @@ public class CharacterWeaponSlotManager : MonoBehaviour
     }
     public virtual void LoadBothWeaponsOnSlots()
     {
-        Debug.Log("Load BOth Weapons on Slots: " + gameObject.name);
         if (character.characterInventoryManager.rightWeapon != null)
         {
             Debug.Log("Load Right Weapon on Slot: " + gameObject.name);

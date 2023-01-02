@@ -43,7 +43,7 @@ public class UIManager : MonoBehaviour
 
         for (int i = 0; i < weaponInventorySlots.Length; i++)
         {
-            if(i<playerInventoryManager.weaponsInventory.Count)
+            /*if(i<playerInventoryManager.weaponsInventory.Count)
             {
                 if(weaponInventorySlots.Length <playerInventoryManager.weaponsInventory.Count)
                 {
@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
             else
             {
                 weaponInventorySlots[i].ClearInventorySlot();
-            }
+            }*/
         }
 
         #endregion

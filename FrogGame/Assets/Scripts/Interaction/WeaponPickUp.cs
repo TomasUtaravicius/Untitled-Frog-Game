@@ -26,7 +26,7 @@ public class WeaponPickUp : Interactable
 
         playerLocomotion.GetComponent<Rigidbody>().velocity = Vector3.zero;
         animatorHandler.PlayTargetAnimation("Pick Up Item", true);
-        playerInventory.weaponsInventory.Add(weapon);
+        //playerInventory.weaponsInventory.Add(weapon);
         playerManager.itemInteractableGameObject.GetComponentInChildren<TextMeshProUGUI>().text = weapon.itemName;
         playerManager.itemInteractableGameObject.GetComponentInChildren<RawImage>().texture = weapon.itemIcon.texture;
         playerManager.itemInteractableGameObject.SetActive(true);

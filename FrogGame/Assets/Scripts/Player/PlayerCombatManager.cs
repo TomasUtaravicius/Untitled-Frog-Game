@@ -22,7 +22,7 @@ public class PlayerCombatManager : CharacterCombatManager
                 player.playerStatsManager.DrainStamina(player.playerInventoryManager.rightWeapon.baseStamina * player.playerInventoryManager.rightWeapon.heavyAttackStaminaMultiplier);
             }
         }
-        else if (player.isUsingLeftHand)
+        /*else if (player.isUsingLeftHand)
         {
             if (currentAttackType == AttackType.Light)
             {
@@ -32,6 +32,6 @@ public class PlayerCombatManager : CharacterCombatManager
             {
                 player.playerStatsManager.DrainStamina(player.playerInventoryManager.leftWeapon.baseStamina * player.playerInventoryManager.leftWeapon.heavyAttackStaminaMultiplier);
             }
-        }
+        }*/
     }
 }

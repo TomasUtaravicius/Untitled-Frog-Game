@@ -11,7 +11,8 @@ public enum WeaponType
     Shield,
     Unarmed,
     Bow,
-    SmallShield
+    SmallShield,
+    Blowpipe
 }
 public enum AmmoType
 {

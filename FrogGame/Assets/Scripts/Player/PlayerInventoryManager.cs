@@ -2,14 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventoryManager : CharacterInventoryManager
+public class PlayerInventoryManager : MonoBehaviour
 {
-    
-    public List<WeaponItem> weaponsInventory;
+    public WeaponItem meleeWeapon;
+    public WeaponItem rangedWeapon;
+
+    [Header("Current Item Being Used")]
+    public Item currentItemBeingUsed;
+
+    [Header("Quick Slot Items")]
+    public ConsumableItem currentConsumable;
+    public WeaponItem rightWeapon;
+    public RangedAmmoItem currentAmmo;
 
     public void ChangeRightWeapon()
     {
-        currentRightWeaponIndex = currentRightWeaponIndex + 1;
+       /* currentRightWeaponIndex = currentRightWeaponIndex + 1;
 
         if(currentRightWeaponIndex == 0 && weaponsInRightHandSlots[0] !=null)
         {
@@ -40,11 +48,11 @@ public class PlayerInventoryManager : CharacterInventoryManager
             currentRightWeaponIndex = -1;
             rightWeapon = characterWeaponSlotManager.unarmedWeapon;
             characterWeaponSlotManager.LoadWeaponOnSlot(characterWeaponSlotManager.unarmedWeapon, false);
-        }
+        }*/
     }
     public void ChangeLeftWeapon()
     {
-        currentLeftWeaponIndex = currentLeftWeaponIndex + 1;
+        /*currentLeftWeaponIndex = currentLeftWeaponIndex + 1;
 
         if (currentLeftWeaponIndex == 0 && weaponsInLeftHandSlots[0] != null)
         {
@@ -71,7 +79,7 @@ public class PlayerInventoryManager : CharacterInventoryManager
             currentLeftWeaponIndex = -1;
             leftWeapon = characterWeaponSlotManager.unarmedWeapon;
             characterWeaponSlotManager.LoadWeaponOnSlot(characterWeaponSlotManager.unarmedWeapon, true);
-        }
+        }*/
     }
 }
 

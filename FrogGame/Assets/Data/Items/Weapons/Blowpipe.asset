@@ -10,28 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71f4699d32b3b3e48b4185e9ff2a87f0, type: 3}
-  m_Name: Unarmed
+  m_Name: Blowpipe
   m_EditorClassIdentifier: 
-  itemIcon: {fileID: 21300000, guid: 3ccd7a6bfe4e95d4a9770a10a91f5a77, type: 3}
-  itemName: 
-  modelPrefab: {fileID: 6317383156455056488, guid: ebaea3c50dc605946bb1a7b33d677ae9, type: 3}
-  isUnarmed: 1
-  weaponAnimator: {fileID: 22100000, guid: c3e4a4bd2eed38640b00f608d6729644, type: 2}
-  weaponType: 5
+  itemIcon: {fileID: 21300000, guid: a7bedadda5c07124e85ba3b68fe5cf79, type: 3}
+  itemName: Blowpipe
+  modelPrefab: {fileID: 6392932085916228918, guid: 8204ed06cf0cc024c9ff21dfd678f6d4, type: 3}
+  isUnarmed: 0
+  weaponAnimator: {fileID: 22100000, guid: dc040fbfc21491f4e8781d9d6795b42d, type: 2}
+  weaponType: 6
   lightAttackDamageMultiplier: 1
   heavyAttackDamageMultiplier: 1.5
   criticalDamageMultiplier: 4
-  baseDamage: 10
+  baseDamage: 25
   physicalDamageAbsorption: 0
   poiseBreak: 25
   offensivePoiseBonus: 0
-  baseStamina: 10
+  baseStamina: 25
   lightAttackStaminaMultiplier: 1
   heavyAttackStaminaMultiplier: 1.5
-  tap_RB_Action: {fileID: 0}
-  hold_RB_Action: {fileID: 0}
+  tap_RB_Action: {fileID: 11400000, guid: 6da07917d60eae64dbcba07c1c331271, type: 2}
+  hold_RB_Action: {fileID: 11400000, guid: 1f9a8958fdd10c14eaea22a5ba5f1283, type: 2}
   tap_LB_Action: {fileID: 0}
-  hold_LB_Action: {fileID: 0}
+  hold_LB_Action: {fileID: 11400000, guid: d09d604e2ad54df478336b4dcade590f, type: 2}
   tap_RT_Action: {fileID: 0}
   hold_RT_Action: {fileID: 0}
   tap_LT_Action: {fileID: 0}

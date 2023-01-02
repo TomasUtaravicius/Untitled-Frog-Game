@@ -17,7 +17,7 @@ public class EquipmentWindowUI : MonoBehaviour
     }
     public void LoadWeaponsOnEquipmentScreen(PlayerInventoryManager playerInventory)
     {
-        for (int i = 0; i < handEquipmentSlotUI.Length; i++)
+       /* for (int i = 0; i < handEquipmentSlotUI.Length; i++)
         {
             if(handEquipmentSlotUI[i].rightHandSlot01)
             {
@@ -35,7 +35,7 @@ public class EquipmentWindowUI : MonoBehaviour
             {
                 handEquipmentSlotUI[i].AddItem(playerInventory.weaponsInLeftHandSlots[1]);
             }
-        }
+        }*/
     }
     public void SelectRightHandSlot01()
     {

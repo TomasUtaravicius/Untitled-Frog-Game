@@ -101,6 +101,7 @@ public class InputHandler : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<PlayerManager>();
+        twoHandFlag = true;
     }
     
 
@@ -190,7 +191,15 @@ public class InputHandler : MonoBehaviour
             {
                 player.UpdateUsingHand(true);
                 player.playerInventoryManager.currentItemBeingUsed = player.playerInventoryManager.rightWeapon;
-                player.playerInventoryManager.rightWeapon.tap_RB_Action.PerformAction(player);
+                if(player.isArmed)
+                {
+                    player.playerInventoryManager.rightWeapon.tap_RB_Action.PerformAction(player);
+                    player.isInCombat = true;
+                }
+                else
+                {
+                    player.isInCombat = true;
+                }
             }
             else
             {
@@ -211,14 +220,23 @@ public class InputHandler : MonoBehaviour
                 {
                     player.UpdateUsingHand(true);
                     player.playerInventoryManager.currentItemBeingUsed = player.playerInventoryManager.rightWeapon;
-                    player.playerInventoryManager.rightWeapon.tap_LB_Action.PerformAction(player);
+                    if (player.isArmed)
+                    {
+                        player.playerInventoryManager.rightWeapon.tap_LB_Action.PerformAction(player);
+                        player.isInCombat = true;
+                    }
+                    else
+                    {
+                        player.isInCombat = true;
+                    }
+                    
                 }
                 else
                 {
                     Debug.LogWarning("TapLB Action doesn't exist");
                 }
             }
-            else
+            /*else
             {
                 if (player.playerInventoryManager.leftWeapon.tap_LB_Action!=null)
                 {
@@ -230,7 +248,7 @@ public class InputHandler : MonoBehaviour
                 {
                     Debug.LogWarning("TapLB Action doesn't exist");
                 }
-            }
+            }*/
         }
        
     }
@@ -272,7 +290,7 @@ public class InputHandler : MonoBehaviour
                 }
                 
             }
-            else
+            /*else
             {
                 if (player.playerInventoryManager.leftWeapon.tap_LT_Action!=null)
                 {
@@ -285,7 +303,7 @@ public class InputHandler : MonoBehaviour
                     Debug.LogWarning("TapLT Action doesn't exist");
                 }
 
-            }
+            }*/
         }
     }
 
@@ -351,7 +369,7 @@ public class InputHandler : MonoBehaviour
                     Debug.LogWarning("HoldLB Action doesn't exist");
                 }
             }
-            else
+            /*else
             {
                 if (player.playerInventoryManager.leftWeapon.hold_LB_Action!=null)
                 {
@@ -364,7 +382,7 @@ public class InputHandler : MonoBehaviour
                     Debug.LogWarning("HoldLB Action doesn't exist");
                 }
                 
-            }
+            }*/
         }
         else if (hold_lb_Input == false)
         {
@@ -475,7 +493,9 @@ public class InputHandler : MonoBehaviour
 
     private void HandleTwoHandedInput()
     {
-        if(y_Input)
+        twoHandFlag = true;
+        player.isTwoHanding = true;
+        /*if(y_Input)
         {
             y_Input = false;
             twoHandFlag = !twoHandFlag;
@@ -493,7 +513,7 @@ public class InputHandler : MonoBehaviour
                 player.playerWeaponSlotManager.LoadWeaponOnSlot(player.playerInventoryManager.leftWeapon, true);
                 
             }
-        }
+        }*/
     }
  
     private void HandleUseConsumableInput()

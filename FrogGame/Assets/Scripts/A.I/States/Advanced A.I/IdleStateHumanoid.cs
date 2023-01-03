@@ -33,6 +33,7 @@ public class IdleStateHumanoid : State
                     if (targetCharacter.isDead)
                         return this;
 
+                    Debug.LogWarning("Looking for enemy, my name is: " + aiCharacter.name);
                     Vector3 targetDirection = targetCharacter.transform.position - transform.position;
                     float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 

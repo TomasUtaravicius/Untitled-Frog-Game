@@ -7,6 +7,7 @@ public class AttackStateHumanoid : State
     public CombatStanceStateHumanoid combatStanceState;
     public PursueStateHumanoid pursueTargetState;
     public RotateTowardsTargetStateHumanoid rotateTowardsTargetState;
+    public IdleStateHumanoid idleState;
     public ItemBasedAttackAction currentAttack;
 
     bool willDoComboOnNextAttack = false;
@@ -17,6 +18,7 @@ public class AttackStateHumanoid : State
         combatStanceState = GetComponent<CombatStanceStateHumanoid>();
         pursueTargetState = GetComponent<PursueStateHumanoid>();
         rotateTowardsTargetState = GetComponent<RotateTowardsTargetStateHumanoid>();
+        idleState = GetComponent<IdleStateHumanoid>();
     }
     public override State Tick(EnemyManager enemy)
     {
@@ -66,11 +68,16 @@ public class AttackStateHumanoid : State
         {
             return this;
         }
+        if(!enemy.isHoldingArrow)
+        {
+            ResetStateFlags();
+            return combatStanceState;
+        }
         if(enemy.currentTarget.isDead)
         {
             ResetStateFlags();
             enemy.currentTarget = null;
-            return this;
+            return idleState;
         }
         if (enemy.distanceFromTarget > enemy.maximimumAggressionRadius)
         {
@@ -80,7 +87,6 @@ public class AttackStateHumanoid : State
         if (!hasPerformedAttack)
         {
             FireAmmo(enemy);
-            
         }
         ResetStateFlags();
         return rotateTowardsTargetState;

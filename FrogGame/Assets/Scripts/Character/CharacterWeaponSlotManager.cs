@@ -77,6 +77,8 @@ public class CharacterWeaponSlotManager : MonoBehaviour
                     backSlot.LoadWeaponModel(leftHandSlot.currentWeapon);
                     leftHandSlot.UnloadWeaponAndDestroy();
                     character.characterAnimatorHandler.PlayTargetAnimation("Left Arm Empty", false, true);
+
+                    if(weaponItem.weaponType==WeaponType.Sword)
                     character.characterAnimatorHandler.PlayTargetAnimation("Two_Hand_Idle_01", false, true);
                 }
                 else
@@ -93,7 +95,11 @@ public class CharacterWeaponSlotManager : MonoBehaviour
                 rightHandSlot.LoadWeaponModel(weaponItem);
                 LoadRightWeaponDamageCollider();
 
-                character.animator.runtimeAnimatorController = weaponItem.weaponAnimator;
+                if(weaponItem.weaponAnimator!=null)
+                {
+                    character.animator.runtimeAnimatorController = weaponItem.weaponAnimator;
+                }
+                
                 LoadTwoHandIKTargets(character.isTwoHanding);
             }
         }

@@ -12,7 +12,7 @@ public class CharacterEffectsManager : MonoBehaviour
     public WeaponFX leftWeaponFX;
 
     [Header("Current Range FX")]
-    public GameObject currentRangeFX;
+    public GameObject instantiatedFXModel;
 
     protected virtual void Awake()
     {
@@ -55,7 +55,31 @@ public class CharacterEffectsManager : MonoBehaviour
         }
     }
     public virtual void PlayBloodSplatterFX(Vector3 bloodSplatterLocation)
-   {
+    {
         GameObject blood = Instantiate(bloodSplatterFX, bloodSplatterLocation, Quaternion.identity);
-   }
+    }
+    public virtual void InteruptEffect()
+    {
+        if(instantiatedFXModel!=null)
+        {
+            Destroy(instantiatedFXModel);
+        }
+        if(character.isHoldingArrow)
+        {
+
+            character.animator.SetBool("IsHoldingArrow",false);
+            Animator rangedWeaponAnimator = character.characterWeaponSlotManager.rightHandSlot.currentWeaponModel.GetComponentInChildren<Animator>();
+
+            if(rangedWeaponAnimator!=null)
+            {
+                rangedWeaponAnimator.SetBool("IsDrawn", false);
+                rangedWeaponAnimator.Play("Bow_TH_Fire_01");
+            }
+
+        }
+        if(character.isAiming)
+        {
+            character.animator.SetBool("IsAiming", false);
+        }
+    }
 }

@@ -91,7 +91,7 @@ public class PlayerManager : CharacterManager
         isFiringSpell = animator.GetBool("IsFiringSpell");
         isHoldingArrow = animator.GetBool("IsHoldingArrow");
         isPerformingFullyChargedAttack = animator.GetBool("IsPerformingFullyCharged");
-
+        isAiming = animator.GetBool("IsAiming");
         animator.SetBool("IsDead", isDead);
         animator.SetBool("IsInAir", isInAir);
         animator.SetBool("IsBlocking", isBlocking);
@@ -207,6 +207,7 @@ public class PlayerManager : CharacterManager
                     if (targetCharacter.isDead)
                         return false;
 
+                    return true;
                     /*Vector3 targetDirection = targetCharacter.transform.position - transform.position;
                     float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 

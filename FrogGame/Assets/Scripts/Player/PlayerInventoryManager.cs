@@ -2,18 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInventoryManager : MonoBehaviour
+public class PlayerInventoryManager : CharacterInventoryManager
 {
     public WeaponItem meleeWeapon;
     public WeaponItem rangedWeapon;
-
-    [Header("Current Item Being Used")]
-    public Item currentItemBeingUsed;
-
-    [Header("Quick Slot Items")]
-    public ConsumableItem currentConsumable;
-    public WeaponItem rightWeapon;
-    public RangedAmmoItem currentAmmo;
 
     public void ChangeRightWeapon()
     {

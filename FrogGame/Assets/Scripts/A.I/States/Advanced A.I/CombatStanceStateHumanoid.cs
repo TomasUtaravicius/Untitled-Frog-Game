@@ -22,6 +22,7 @@ public class CombatStanceStateHumanoid : State
     bool hasRandomDodgeDirection = false;
     float randomDodgeDirection;
     bool hasAmmoLoaded = false;
+    float timeUntilFire;
     Quaternion targetDodgeDirection;
 
 
@@ -133,6 +134,7 @@ public class CombatStanceStateHumanoid : State
         //If AI is too far from the target, go pursue it.
         if (enemy.distanceFromTarget > enemy.maximimumAggressionRadius)
         {
+            ResetStateFlags();
             return pursueState;
         }
 
@@ -155,12 +157,12 @@ public class CombatStanceStateHumanoid : State
 
         HandleRotateTowardsTarget(enemy);
 
-        if(!hasAmmoLoaded)
+        if(!enemy.isHoldingArrow)
         {
             DrawArrow(enemy);
             AimAtTarget(enemy);
         }
-        if (enemy.currentRecoveryTime <= 0 && hasAmmoLoaded)
+        if (enemy.currentRecoveryTime <= 0 && enemy.isHoldingArrow)
         {
             ResetStateFlags();
             return attackState;
@@ -193,6 +195,7 @@ public class CombatStanceStateHumanoid : State
         //Rotate with navmesh
         else
         {
+            //Debug.LogWarning("Rotating with navmesh");
             Vector3 relativeDirection = enemy.transform.InverseTransformDirection(enemy.navMeshAgent.desiredVelocity);
             Vector3 targetVelocity = enemy.rigidbody.velocity;
 
@@ -359,6 +362,7 @@ public class CombatStanceStateHumanoid : State
                     hasPerformedDodge = true;
                     enemy.transform.rotation = targetDodgeDirection;
                     enemy.enemyAnimatorHandler.PlayTargetAnimation("Rolling",true);
+                    timeUntilFire = Random.Range(enemy.minimumTimeToAim, enemy.maximumTimeToAim);
                 }
             }
         }
@@ -381,7 +385,7 @@ public class CombatStanceStateHumanoid : State
 
     private void AimAtTarget(EnemyManager enemy)
     {
-        float timeUntilFire = Random.Range(enemy.minimumTimeToAim, enemy.maximumTimeToAim);
+        timeUntilFire = Random.Range(enemy.minimumTimeToAim, enemy.maximumTimeToAim);
         enemy.currentRecoveryTime = timeUntilFire;
     }
 }

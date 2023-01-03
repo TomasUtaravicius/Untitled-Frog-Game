@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterSoundFXManager : MonoBehaviour
 {
-    CharacterManager character;
+    CharacterManager player;
     public AudioSource audioSource;
     //Attacking Grunts
 
@@ -12,16 +12,16 @@ public class CharacterSoundFXManager : MonoBehaviour
 
     [Header("Taking Damage Sounds")]
     public AudioClip[] takingDamageSounds;
-    private List<AudioClip> potentialDamageSounds;
-    private AudioClip lastDamageSoundPlayed;
+    protected List<AudioClip> potentialDamageSounds;
+    protected AudioClip lastDamageSoundPlayed;
 
     [Header("Weapon Whooses")]
-    private List<AudioClip> potentialWeaponWhooses;
-    private AudioClip lastWeaponWhoosh;
+    protected List<AudioClip> potentialWeaponWhooses;
+    protected AudioClip lastWeaponWhoosh;
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        character = GetComponent<CharacterManager>();
+        player = GetComponent<CharacterManager>();
     }
     public virtual void PlayRandomDamageSoundFX()
     {
@@ -42,30 +42,30 @@ public class CharacterSoundFXManager : MonoBehaviour
     public virtual void PlayRandomWeaponWhoosh()
     {
         potentialWeaponWhooses = new List<AudioClip>();
-        if(character.isUsingLeftHand)
+        if(player.isUsingLeftHand)
         {
-            foreach(var whooshSound in character.characterInventoryManager.leftWeapon.weaponWhooses)
+            foreach(var whooshSound in player.characterInventoryManager.leftWeapon.weaponWhooses)
             {
                 if(whooshSound!=lastWeaponWhoosh)
                 {
                     potentialWeaponWhooses.Add(whooshSound);
                 }
                 int randomValue = Random.Range(0, potentialWeaponWhooses.Count);
-                lastWeaponWhoosh = character.characterInventoryManager.leftWeapon.weaponWhooses[randomValue];
-                audioSource.PlayOneShot(character.characterInventoryManager.leftWeapon.weaponWhooses[randomValue]);
+                lastWeaponWhoosh = player.characterInventoryManager.leftWeapon.weaponWhooses[randomValue];
+                audioSource.PlayOneShot(player.characterInventoryManager.leftWeapon.weaponWhooses[randomValue]);
             }
         }
-        else if(character.isUsingRightHand)
+        else if(player.isUsingRightHand)
         {
-            foreach (var whooshSound in character.characterInventoryManager.rightWeapon.weaponWhooses)
+            foreach (var whooshSound in player.characterInventoryManager.rightWeapon.weaponWhooses)
             {
                 if (whooshSound != lastWeaponWhoosh)
                 {
                     potentialWeaponWhooses.Add(whooshSound);
                 }
                 int randomValue = Random.Range(0, potentialWeaponWhooses.Count);
-                lastWeaponWhoosh = character.characterInventoryManager.rightWeapon.weaponWhooses[randomValue];
-                audioSource.PlayOneShot(character.characterInventoryManager.rightWeapon.weaponWhooses[randomValue]);
+                lastWeaponWhoosh = player.characterInventoryManager.rightWeapon.weaponWhooses[randomValue];
+                audioSource.PlayOneShot(player.characterInventoryManager.rightWeapon.weaponWhooses[randomValue]);
             }
         }
         

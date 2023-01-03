@@ -21,7 +21,7 @@ MonoBehaviour:
   useGravity: 1
   carryLimit: 99
   currentAmount: 99
-  physicalDamage: 50
+  physicalDamage: 15
   loadedItemModel: {fileID: 8684076778105871611, guid: 8a69f4daf2ddcde4fa36ab0d8e702ffe, type: 3}
   liveAmmoModel: {fileID: 8684076778105871611, guid: 369f4228823b9bf4b894a6972675d2a7, type: 3}
   penetratedModel: {fileID: 8684076778105871611, guid: fa44d1d7639a4f6489e5ae61592b207b, type: 3}

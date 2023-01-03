@@ -30,6 +30,8 @@ public class CharacterManager : MonoBehaviour
     [Header("Combat Flags")]
     public bool canBeRiposted;
     public bool canBeParried;
+    public bool isBeingRiposted;
+    public bool isBeingBackstabbed;
     public bool isParrying;
     public bool isBlocking;
     public bool isInvulnerable;
@@ -39,6 +41,8 @@ public class CharacterManager : MonoBehaviour
     public bool isAiming;
     public bool isPerformingFullyChargedAttack;
     public bool isAttacking;
+    public bool isPerformingRiposte;
+    public bool isPerformingBackstab;
 
     [Header("Spells")]
     public bool isFiringSpell;

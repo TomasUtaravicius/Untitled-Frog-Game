@@ -2,30 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWeaponSlotManager : MonoBehaviour
+public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
 {
     PlayerManager player;
-    public WeaponHolderSlot rightHandSlot;
     public WeaponHolderSlot sideSlot;
-    public WeaponHolderSlot leftHandSlot;
-    public WeaponHolderSlot backSlot;
-    public DamageCollider rightHandDamageCollider;
 
-    [Header("Hand IK Targets")]
-    public RightHandIKTarget rightHandIKTarget;
-    public LeftHandIKTarget leftHandIKTarget;
+
+
 
     [Header("Idle Hand IK Targets")]
     public RightHandIKTarget idleRightHandIKTarget;
     public LeftHandIKTarget idleLeftHandIKTarget;
-    private void Awake()
+    protected override void Awake()
     {
         player = GetComponent<PlayerManager>();
         LoadWeaponHolderSlots();
         LoadBothWeaponsOnSlots();
     }
 
-    public void LoadWeaponHolderSlots()
+    public override void LoadWeaponHolderSlots()
     {
         Debug.LogWarning("Load Weapon Holder Slots");
         WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
@@ -49,7 +44,7 @@ public class PlayerWeaponSlotManager : MonoBehaviour
             }
         }
     }
-    public void LoadBothWeaponsOnSlots()
+    public override void LoadBothWeaponsOnSlots()
     {
 
         Debug.Log("Load Right Weapon on Slot: " + gameObject.name);
@@ -67,7 +62,7 @@ public class PlayerWeaponSlotManager : MonoBehaviour
              LoadWeaponOnSlot(character.characterInventoryManager.leftWeapon, true);
          }*/
     }
-    public void LoadWeaponOnSlot(WeaponItem weaponItem, bool isMelee)
+    public override void LoadWeaponOnSlot(WeaponItem weaponItem, bool isMelee)
     {
 
         if (player.isInCombat || player.isDrawing)
@@ -190,7 +185,7 @@ public class PlayerWeaponSlotManager : MonoBehaviour
     }
 
 
-    protected virtual void LoadTwoHandIKTargets(bool isTwoHanding)
+    protected override void LoadTwoHandIKTargets(bool isTwoHanding)
     {
         if(player.isArmed)
         {
@@ -208,24 +203,24 @@ public class PlayerWeaponSlotManager : MonoBehaviour
         player.characterAnimatorHandler.SetHandIKForWeapon(rightHandIKTarget, leftHandIKTarget, isTwoHanding);
     }
 
-    public virtual void OpenDamageCollider()
+    public override void OpenDamageCollider()
     {
         rightHandDamageCollider.EnableDamageCollider();
         player.characterEffectsManager.PlayWeaponFX(false);
         player.characterSoundFXManager.PlayRandomWeaponWhoosh();
     }
 
-    public virtual void CloseDamageCollider()
+    public override void CloseDamageCollider()
     {
         rightHandDamageCollider.DisableDamageCollider();
         player.characterEffectsManager.StopWeaponFX(false);
     }
-    public virtual void GrantWeaponAttackingPoiseBonus()
+    public override void GrantWeaponAttackingPoiseBonus()
     {
-        WeaponItem currentWeaponBeingUsed = player.characterInventoryManager.currentItemBeingUsed as WeaponItem;
+        WeaponItem currentWeaponBeingUsed = player.playerInventoryManager.currentItemBeingUsed as WeaponItem;
         player.characterStatsManager.totalPoiseDefense = player.characterStatsManager.totalPoiseDefense + currentWeaponBeingUsed.offensivePoiseBonus;
     }
-    public virtual void ResetWeaponAttackingPoiseBonus()
+    public override void ResetWeaponAttackingPoiseBonus()
     {
         player.characterStatsManager.totalPoiseDefense = player.characterStatsManager.armorPoiseBonus;
     }

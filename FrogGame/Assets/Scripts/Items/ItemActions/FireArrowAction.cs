@@ -19,7 +19,7 @@ public class FireArrowAction : ItemAction
         bowAnimator.SetBool("IsDrawn", false);
         bowAnimator.Play("Bow_Fire_01");
 
-        Destroy(character.characterEffectsManager.currentRangeFX);
+        Destroy(character.characterEffectsManager.instantiatedFXModel);
 
         character.characterAnimatorHandler.PlayTargetAnimation("Bow_TH_Fire_01", true);
         character.animator.SetBool("IsHoldingArrow", false);
@@ -83,18 +83,17 @@ public class FireArrowAction : ItemAction
                 Quaternion arrowRotation = Quaternion.LookRotation(enemy.currentTarget.lockOnTransform.position - liveArrow.gameObject.transform.position);
                 liveArrow.transform.rotation = arrowRotation;
             }
-            else
-            {
-                liveArrow.transform.rotation = Quaternion.Euler(player.cameraHandler.cameraPivotTransform.eulerAngles.x, player.lockOnTransform.eulerAngles.y, 0);
-            }
+
             rigidBody.AddForce(liveArrow.transform.forward * character.characterInventoryManager.currentAmmo.forwardVelocity);
             rigidBody.AddForce(liveArrow.transform.up * character.characterInventoryManager.currentAmmo.upwardVelocity);
             rigidBody.useGravity = character.characterInventoryManager.currentAmmo.useGravity;
             rigidBody.mass = character.characterInventoryManager.currentAmmo.ammoMass;
             liveArrow.transform.parent = null;
 
+            damageCollider.characterManager = character;
             damageCollider.ammoItem = character.characterInventoryManager.currentAmmo;
             damageCollider.currentWeaponDamage = character.characterInventoryManager.currentAmmo.physicalDamage;
+            damageCollider.teamIDNumber = enemy.enemyStatsManager.teamIDNumber;
         }
 
         

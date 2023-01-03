@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6498668671817535485}
   m_Father: {fileID: 0}
@@ -44,7 +45,7 @@ GameObject:
   - component: {fileID: 511880419809343746}
   - component: {fileID: 217354830625361725}
   - component: {fileID: 4205601097844050552}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,6 +62,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6498668671817535485}
   m_RootOrder: 0
@@ -84,6 +86,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -139,7 +142,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7f57c65395c3489ebd67a799e86c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterManager: {fileID: 0}
   currentWeaponDamage: 25
+  teamIDNumber: 0
+  poiseBreak: 0
+  offensivePoiseBonus: 0
+  enabledDamageColliderOnStartUp: 0
 --- !u!1 &6498668671817535484
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +174,7 @@ Transform:
   m_LocalRotation: {x: -0.7841337, y: -0.15518598, z: -0.17786735, w: 0.57394683}
   m_LocalPosition: {x: 8.2, y: 4, z: -0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 511880419807192214}
   m_Father: {fileID: 354853550224282989}

@@ -7,6 +7,7 @@ public class PlayerCombatManager : CharacterCombatManager
     PlayerManager player;
     private void Awake()
     {
+        base.Awake();
         player = GetComponent<PlayerManager>();
     }
     public override void DrainStaminaBasedOnAttack()

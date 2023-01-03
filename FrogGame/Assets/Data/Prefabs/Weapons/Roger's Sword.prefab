@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 511880419809343746}
   - component: {fileID: 217354830625361725}
   - component: {fileID: 4205601097844050552}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 511880419806871264}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6857891555633708130}
@@ -128,10 +128,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511880419806871264}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.18, y: 0.8, z: 0.059882548}
+  m_Size: {x: 0.09, y: 0.8, z: 0.059882548}
   m_Center: {x: -0.000000022351738, y: 0.38, z: 0.000000054809625}
 --- !u!114 &4205601097844050552
 MonoBehaviour:

@@ -19,6 +19,8 @@ public class DamageCollider : MonoBehaviour
     protected bool shieldHasBeenHit;
     protected bool hasBeenParried;
     protected string currentDamageAnimation;
+
+    private List<CharacterManager> charactersDamagedDuringThisCalculation = new List<CharacterManager>();
     private void Awake()
     {
         damageCollider = GetComponent<Collider>();
@@ -34,6 +36,7 @@ public class DamageCollider : MonoBehaviour
     }
     public void DisableDamageCollider()
     {
+        charactersDamagedDuringThisCalculation.Clear();
         damageCollider.enabled = false;
     }
     protected virtual void DealDamage(CharacterStatsManager enemyStats)
@@ -73,18 +76,22 @@ public class DamageCollider : MonoBehaviour
     }
     protected virtual void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.layer==9)
+        if (collision.gameObject.layer==LayerMask.NameToLayer("Damagable Collider"))
         {
             shieldHasBeenHit = false;
             hasBeenParried = false;
 
-            CharacterStatsManager enemyStats = collision.GetComponent<CharacterStatsManager>();
-            CharacterManager enemyManager = collision.GetComponent<CharacterManager>();
-            CharacterEffectsManager enenmyEffects = collision.GetComponent<CharacterEffectsManager>();
+            CharacterStatsManager enemyStats = collision.GetComponentInParent<CharacterStatsManager>();
+            CharacterManager enemyManager = collision.GetComponentInParent<CharacterManager>();
+            CharacterEffectsManager enemyEffects = collision.GetComponentInParent<CharacterEffectsManager>();
             BlockingCollider shield = collision.transform.GetComponentInChildren<BlockingCollider>();
 
             if (enemyManager != null)
             {
+                if (charactersDamagedDuringThisCalculation.Contains(enemyManager))
+                    return;
+
+                charactersDamagedDuringThisCalculation.Add(enemyManager);
                 if (enemyStats.teamIDNumber == teamIDNumber)
                     return;
 
@@ -110,8 +117,8 @@ public class DamageCollider : MonoBehaviour
                 Vector3 contactPoint = collision.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
                 float directionHitFrom = Vector3.SignedAngle(characterManager.transform.forward, enemyManager.transform.forward, Vector3.up);
                 GetDamageDirection(directionHitFrom);
-                enenmyEffects.PlayBloodSplatterFX(contactPoint);
-
+                enemyEffects.PlayBloodSplatterFX(contactPoint);
+                enemyEffects.InteruptEffect();
                 DealDamage(enemyStats);
             }
         }

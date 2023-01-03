@@ -9,14 +9,14 @@ public class RangedProjectileDamageCollider : DamageCollider
     protected GameObject penetratedProjectile;
     protected override void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Damagable Collider"))
         {
             shieldHasBeenHit = false;
             hasBeenParried = false;
 
-            CharacterStatsManager enemyStats = collision.GetComponent<CharacterStatsManager>();
-            CharacterManager enemyManager = collision.GetComponent<CharacterManager>();
-            CharacterEffectsManager enenmyEffects = collision.GetComponent<CharacterEffectsManager>();
+            CharacterStatsManager enemyStats = collision.GetComponentInParent<CharacterStatsManager>();
+            CharacterManager enemyManager = collision.GetComponentInParent<CharacterManager>();
+            CharacterEffectsManager enenmyEffects = collision.GetComponentInParent<CharacterEffectsManager>();
             BlockingCollider shield = collision.transform.GetComponentInChildren<BlockingCollider>();
 
             if (enemyManager != null)
@@ -64,7 +64,7 @@ public class RangedProjectileDamageCollider : DamageCollider
             hasAlreadyPenetratedASurface = true;
             Vector3 contactPoint = collision.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
-            GameObject penetratedArrow = Instantiate(ammoItem.penetratedModel, contactPoint, Quaternion.Euler(0, 0, 0));
+            GameObject penetratedArrow = Instantiate(ammoItem.penetratedModel, contactPoint, transform.rotation);
 
             penetratedProjectile = penetratedArrow;
 

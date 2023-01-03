@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: BlackSword
   modelPrefab: {fileID: 354853550223953691, guid: f6ce368f80c4f2b4da7a777cf8b77baf, type: 3}
   isUnarmed: 0
-  weaponAnimator: {fileID: 0}
+  weaponAnimator: {fileID: 22100000, guid: 9877e89219c4de44daab83bcf77277b8, type: 2}
   weaponType: 3
   lightAttackDamageMultiplier: 1
   heavyAttackDamageMultiplier: 1.5
@@ -30,9 +30,9 @@ MonoBehaviour:
   heavyAttackStaminaMultiplier: 1.5
   tap_RB_Action: {fileID: 11400000, guid: a7679d5031daae948a0646aee4d3cfdb, type: 2}
   hold_RB_Action: {fileID: 11400000, guid: 3aaa3ed035edfba48a39bfbd169411dd, type: 2}
-  tap_LB_Action: {fileID: 0}
+  tap_LB_Action: {fileID: 11400000, guid: 89347ab5133e9af40816fe44f3a46065, type: 2}
   hold_LB_Action: {fileID: 0}
-  tap_RT_Action: {fileID: 0}
+  tap_RT_Action: {fileID: 11400000, guid: 89347ab5133e9af40816fe44f3a46065, type: 2}
   hold_RT_Action: {fileID: 0}
   tap_LT_Action: {fileID: 0}
   hold_LT_Action: {fileID: 0}

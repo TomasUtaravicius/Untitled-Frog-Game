@@ -15,7 +15,7 @@ public class AimAction : ItemAction
         {
             player.uiManager.crosshair.SetActive(true);
         }
-        character.isAiming = true;
+        character.animator.SetBool("IsAiming", true);
         
 
     }

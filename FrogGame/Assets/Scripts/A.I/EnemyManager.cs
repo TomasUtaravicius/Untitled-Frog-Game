@@ -81,6 +81,7 @@ public class EnemyManager : CharacterManager
         isInvulnerable = animator.GetBool("IsInvulnerable");
         isShiftingPhase = animator.GetBool("IsShiftingPhase");
         isHoldingArrow = animator.GetBool("IsHoldingArrow");
+        isAiming = animator.GetBool("IsAiming");
         animator.SetBool("IsDead", isDead);
         animator.SetBool("IsTwoHanding", isTwoHanding);
         animator.SetBool("IsBlocking", isBlocking);

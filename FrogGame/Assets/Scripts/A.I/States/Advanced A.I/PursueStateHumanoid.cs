@@ -59,8 +59,7 @@ public class PursueStateHumanoid : State
         //Rotate with navmesh
         else
         {
-            Debug.LogWarning("NAV MESH ROTATION: " + aiCharacter.navMeshAgent.transform.rotation);
-            Debug.LogWarning("CHARACTER ROTATION: " + aiCharacter.transform.rotation);
+            //Debug.Log("Rotate with navmesh pursue target");
             Vector3 relativeDirection = aiCharacter.transform.InverseTransformDirection(aiCharacter.navMeshAgent.desiredVelocity);
             Vector3 targetVelocity = aiCharacter.rigidbody.velocity;
 

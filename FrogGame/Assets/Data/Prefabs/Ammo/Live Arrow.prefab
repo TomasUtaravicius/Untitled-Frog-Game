@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8819466474505457889}
   - component: {fileID: 4358173774016698160}
   - component: {fileID: 5165829931394553272}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Damage Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,6 +184,10 @@ PrefabInstance:
     - target: {fileID: 6884292341228629612, guid: 2fc317cfc0bc3ce48b19ba9aaef96b39, type: 3}
       propertyPath: m_Name
       value: Arrow
+      objectReference: {fileID: 0}
+    - target: {fileID: 6884292341228629612, guid: 2fc317cfc0bc3ce48b19ba9aaef96b39, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fc317cfc0bc3ce48b19ba9aaef96b39, type: 3}

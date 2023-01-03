@@ -24,6 +24,7 @@ public class EnemyManager : CharacterManager
 
     [Header("A.I. Settings")]
     public float detectionRadius = 20f;
+    public float stoppingDistance = 2f;
     public float minimumDetectionAngle = -50f;
     public float maximimumDetectionAngle = 50f;
     public float maximimumAggressionRadius = 5f;
@@ -42,6 +43,7 @@ public class EnemyManager : CharacterManager
     [Header("AI Archery Settings")]
     public float minimumTimeToAim = 1f;
     public float maximumTimeToAim = 3f;
+    public bool isStationaryArcher;
 
     [Header("A.I Combat Settings")]
     public bool allowAIToPerformCombos;

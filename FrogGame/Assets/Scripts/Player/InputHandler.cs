@@ -14,8 +14,8 @@ public class InputHandler : MonoBehaviour
     PlayerControls inputActions;
     PlayerManager player;
 
-    Vector2 movementInput;
-    Vector2 cameraInput;
+    public Vector2 movementInput;
+    public Vector2 cameraInput;
 
     public bool b_Input;
     public bool a_Input;
@@ -51,7 +51,7 @@ public class InputHandler : MonoBehaviour
     public bool inventoryFlag;
     public bool fireFlag;
 
-
+    public Player playerController;
     public float rollInputTimer;
     
     

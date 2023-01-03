@@ -6,32 +6,34 @@ public class RangedProjectileDamageCollider : DamageCollider
 {
     public RangedAmmoItem ammoItem;
     protected bool hasAlreadyPenetratedASurface;
-    protected GameObject penetratedProjectile;
-    protected override void OnTriggerEnter(Collider collision)
+    Rigidbody arrowRigidbody;
+    CapsuleCollider collider;
+
+    private void Awake()
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Damagable Collider"))
+        collider = GetComponent<CapsuleCollider>();
+        arrowRigidbody = GetComponent<Rigidbody>();
+        collider.gameObject.SetActive(true);
+        collider.enabled = enabledDamageColliderOnStartUp;
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        shieldHasBeenHit = false;
+        hasBeenParried = false;
+
+        CharacterStatsManager enemyStats = collision.gameObject.GetComponentInParent<CharacterStatsManager>();
+        CharacterManager enemyManager = collision.gameObject.GetComponentInParent<CharacterManager>();
+        CharacterEffectsManager enenmyEffects = collision.gameObject.GetComponentInParent<CharacterEffectsManager>();
+        BlockingCollider shield = collision.gameObject.transform.GetComponentInChildren<BlockingCollider>();
+
+        if (enemyManager != null)
         {
-            shieldHasBeenHit = false;
-            hasBeenParried = false;
+            if (enemyStats.teamIDNumber == teamIDNumber)
+                return;
 
-            CharacterStatsManager enemyStats = collision.GetComponentInParent<CharacterStatsManager>();
-            CharacterManager enemyManager = collision.GetComponentInParent<CharacterManager>();
-            CharacterEffectsManager enenmyEffects = collision.GetComponentInParent<CharacterEffectsManager>();
-            BlockingCollider shield = collision.transform.GetComponentInChildren<BlockingCollider>();
-
-            if (enemyManager != null)
-            {
-                if (enemyStats.teamIDNumber == teamIDNumber)
-                    return;
-
-                CheckForParry(enemyManager);
-                CheckForBlock(enemyManager, enemyStats, shield);
-            }
-
-            if (enemyStats != null)
-            {
-                if (enemyStats.teamIDNumber == teamIDNumber)
-                    return;
+            CheckForParry(enemyManager);
+            CheckForBlock(enemyManager, enemyStats, shield);
 
                 if (hasBeenParried)
                     return;
@@ -56,24 +58,19 @@ public class RangedProjectileDamageCollider : DamageCollider
                 {
                     enemyStats.TakeDamage(currentWeaponDamage, currentDamageAnimation, characterManager);
                 }
-            }
             
         }
-        if (!hasAlreadyPenetratedASurface && penetratedProjectile == null)
+
+        
+        if (!hasAlreadyPenetratedASurface)
         {
             hasAlreadyPenetratedASurface = true;
-            Vector3 contactPoint = collision.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+            arrowRigidbody.isKinematic = true;
+            collider.enabled = false;
 
-            GameObject penetratedArrow = Instantiate(ammoItem.penetratedModel, contactPoint, transform.rotation);
-
-            penetratedProjectile = penetratedArrow;
-
-            penetratedArrow.transform.parent = collision.transform;
-            penetratedArrow.transform.rotation = Quaternion.LookRotation(gameObject.transform.forward);
-
-
+            gameObject.transform.position = collision.GetContact(0).point;
+            gameObject.transform.rotation = Quaternion.LookRotation(transform.forward);
+            gameObject.transform.parent = collision.collider.transform;
         }
-
-        Destroy(transform.root.gameObject);
     }
 }

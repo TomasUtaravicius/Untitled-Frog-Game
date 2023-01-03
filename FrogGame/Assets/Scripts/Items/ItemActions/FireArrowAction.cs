@@ -28,8 +28,8 @@ public class FireArrowAction : ItemAction
         if(player!=null)
         {
             GameObject liveArrow = Instantiate(player.playerInventoryManager.currentAmmo.liveAmmoModel, arrowInstantiationTransform.transform.position, player.cameraHandler.cameraPivotTransform.rotation);
-            Rigidbody rigidBody = liveArrow.GetComponentInChildren<Rigidbody>();
-            RangedProjectileDamageCollider damageCollider = liveArrow.GetComponentInChildren<RangedProjectileDamageCollider>();
+            Rigidbody rigidBody = liveArrow.GetComponent<Rigidbody>();
+            RangedProjectileDamageCollider damageCollider = liveArrow.GetComponent<RangedProjectileDamageCollider>();
             damageCollider.characterManager = player;
             damageCollider.teamIDNumber = character.GetComponent<CharacterStatsManager>().teamIDNumber;
 
@@ -73,8 +73,8 @@ public class FireArrowAction : ItemAction
         {
             EnemyManager enemy = character as EnemyManager;
             GameObject liveArrow = Instantiate(character.characterInventoryManager.currentAmmo.liveAmmoModel, arrowInstantiationTransform.transform.position, Quaternion.identity);
-            Rigidbody rigidBody = liveArrow.GetComponentInChildren<Rigidbody>();
-            RangedProjectileDamageCollider damageCollider = liveArrow.GetComponentInChildren<RangedProjectileDamageCollider>();
+            Rigidbody rigidBody = liveArrow.GetComponent<Rigidbody>();
+            RangedProjectileDamageCollider damageCollider = liveArrow.GetComponent<RangedProjectileDamageCollider>();
             damageCollider.characterManager = character;
             damageCollider.teamIDNumber = character.GetComponent<CharacterStatsManager>().teamIDNumber;
 

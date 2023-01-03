@@ -24,7 +24,6 @@ public class DamageCollider : MonoBehaviour
     private void Awake()
     {
         damageCollider = GetComponent<Collider>();
-
         damageCollider.gameObject.SetActive(true);
         damageCollider.enabled = enabledDamageColliderOnStartUp;
         damageCollider.isTrigger = true;

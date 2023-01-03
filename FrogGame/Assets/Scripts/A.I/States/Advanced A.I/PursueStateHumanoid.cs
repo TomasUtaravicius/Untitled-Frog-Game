@@ -12,31 +12,19 @@ public class PursueStateHumanoid : State
     }
     public override State Tick(EnemyManager aiCharacter)
     {
-
-        HandleRotateTowardsTarget(aiCharacter);
-
-        if (aiCharacter.isInteracting)
+        if(aiCharacter.combatStyle==AICombatStyle.Archer)
         {
-            return this;
+            return ProcessArcherCombatStyle(aiCharacter);
         }
-        if (aiCharacter.isPerformingAction)
+        else if(aiCharacter.combatStyle==AICombatStyle.SwordAndShield)
         {
-            aiCharacter.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
-        }
-
-        if (aiCharacter.distanceFromTarget > aiCharacter.maximimumAggressionRadius)
-        {
-            aiCharacter.animator.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
-        }
-
-        if (aiCharacter.distanceFromTarget <= aiCharacter.maximimumAggressionRadius)
-        {
-            return combatStanceState;
+            return ProcessSwordCombatStyle(aiCharacter);
         }
         else
         {
             return this;
         }
+       
 
     }
     private void HandleRotateTowardsTarget(EnemyManager aiCharacter)
@@ -70,5 +58,63 @@ public class PursueStateHumanoid : State
         }
 
 
+    }
+
+    private State ProcessSwordCombatStyle(EnemyManager aiCharacter)
+    {
+        HandleRotateTowardsTarget(aiCharacter);
+
+        if (aiCharacter.isInteracting)
+        {
+            return this;
+        }
+        if (aiCharacter.isPerformingAction)
+        {
+            aiCharacter.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
+        }
+
+        if (aiCharacter.distanceFromTarget > aiCharacter.maximimumAggressionRadius)
+        {
+            aiCharacter.animator.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+        }
+
+        if (aiCharacter.distanceFromTarget <= aiCharacter.maximimumAggressionRadius)
+        {
+            return combatStanceState;
+        }
+        else
+        {
+            return this;
+        }
+    }
+    private State ProcessArcherCombatStyle(EnemyManager aiCharacter)
+    {
+        HandleRotateTowardsTarget(aiCharacter);
+
+        if (aiCharacter.isInteracting)
+        {
+            return this;
+        }
+        if (aiCharacter.isPerformingAction)
+        {
+            aiCharacter.animator.SetFloat("Vertical", 0, 0.1f, Time.deltaTime);
+        }
+
+        if (aiCharacter.distanceFromTarget > aiCharacter.maximimumAggressionRadius)
+        {
+            if(!aiCharacter.isStationaryArcher)
+            {
+                aiCharacter.animator.SetFloat("Vertical", 1, 0.1f, Time.deltaTime);
+            }
+        }
+
+        if (aiCharacter.distanceFromTarget <= aiCharacter.maximimumAggressionRadius)
+        {
+            return combatStanceState;
+        }
+        else
+        {
+            return this;
+        }
     }
 }

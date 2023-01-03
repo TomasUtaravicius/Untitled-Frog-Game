@@ -47,8 +47,6 @@ public class CombatStanceStateHumanoid : State
     }
     private State ProcessSwordAndShieldCombatStyle(EnemyManager enemy)
     {
-        enemy.animator.SetFloat("Vertical", verticalMovementValue, 0.2f, Time.deltaTime);
-        enemy.animator.SetFloat("Horizontal", horizontalMovementValue, 0.2f, Time.deltaTime);
         //If the target is dead, go to idle
         if (enemy.currentTarget.isDead)
         {
@@ -61,6 +59,8 @@ public class CombatStanceStateHumanoid : State
             enemy.animator.SetFloat("Horizontal", 0);
             return this;
         }
+
+        
         
         //If AI is too far from the target, go pursue it.
         if (enemy.distanceFromTarget > enemy.maximimumAggressionRadius)
@@ -112,12 +112,12 @@ public class CombatStanceStateHumanoid : State
         {
             GetNewAttack(enemy);
         }
+        HandleMovement(enemy);
         return this;
     }
     private State ProcessArcherCombatStyle(EnemyManager enemy)
     {
-        enemy.animator.SetFloat("Vertical", verticalMovementValue, 0.2f, Time.deltaTime);
-        enemy.animator.SetFloat("Horizontal", horizontalMovementValue, 0.2f, Time.deltaTime);
+
         //If the target is dead, go to idle
         if (enemy.currentTarget.isDead)
         {
@@ -172,6 +172,18 @@ public class CombatStanceStateHumanoid : State
         {
             GetNewAttack(enemy);
         }
+
+        if(enemy.isStationaryArcher)
+        {
+            enemy.animator.SetFloat("Vertical", 0, 0.2f, Time.deltaTime);
+            enemy.animator.SetFloat("Horizontal", 0, 0.2f, Time.deltaTime);
+            
+        }
+        else
+        {
+            HandleMovement(enemy);
+        }
+        
         return this;
     }
     protected void HandleRotateTowardsTarget(EnemyManager enemy)
@@ -387,5 +399,18 @@ public class CombatStanceStateHumanoid : State
     {
         timeUntilFire = Random.Range(enemy.minimumTimeToAim, enemy.maximumTimeToAim);
         enemy.currentRecoveryTime = timeUntilFire;
+    }
+    private void HandleMovement(EnemyManager enemy)
+    {
+        if(enemy.distanceFromTarget<=enemy.stoppingDistance)
+        {
+            enemy.animator.SetFloat("Vertical", 0, 0.2f, Time.deltaTime);
+            enemy.animator.SetFloat("Horizontal", horizontalMovementValue, 0.2f, Time.deltaTime);
+        }
+        else
+        {
+            enemy.animator.SetFloat("Vertical", verticalMovementValue, 0.2f, Time.deltaTime);
+            enemy.animator.SetFloat("Horizontal", horizontalMovementValue, 0.2f, Time.deltaTime);
+        }
     }
 }

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 {
     public ExampleCharacterCamera OrbitCamera;
     public Transform CameraFollowPoint;
+    public InputHandler input;
     public PlayerLocomotionManager Character;
 
     private const string MouseXInput = "Mouse X";
@@ -46,8 +47,8 @@ public class Player : MonoBehaviour
     private void HandleCameraInput()
     {
         // Create the look input vector for the camera
-        float mouseLookAxisUp = Input.GetAxisRaw(MouseYInput);
-        float mouseLookAxisRight = Input.GetAxisRaw(MouseXInput);
+        float mouseLookAxisUp = input.cameraInput.y;
+        float mouseLookAxisRight = input.cameraInput.x;
         Vector3 lookInputVector = new Vector3(mouseLookAxisRight, mouseLookAxisUp, 0f);
 
         // Prevent moving the camera while the cursor isn't locked
@@ -77,10 +78,10 @@ public class Player : MonoBehaviour
         PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
         // Build the CharacterInputs struct
-        characterInputs.MoveAxisForward = Input.GetAxisRaw(VerticalInput);
-        characterInputs.MoveAxisRight = Input.GetAxisRaw(HorizontalInput);
+        characterInputs.MoveAxisForward = input.movementInput.y;
+        characterInputs.MoveAxisRight = input.movementInput.x;
         characterInputs.CameraRotation = OrbitCamera.Transform.rotation;
-        characterInputs.JumpDown = Input.GetKeyDown(KeyCode.Space);
+        characterInputs.JumpDown = input.jump_Input;
 
         // Apply inputs to character
         Character.SetInputs(ref characterInputs);

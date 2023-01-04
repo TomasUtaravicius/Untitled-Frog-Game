@@ -7,7 +7,7 @@ public class IdleState : State
     public PursueState pursueState;
     public LayerMask detectionLayer;
     public LayerMask layerBlockingLineOfSight;
-    public override State Tick(Character aiCharacter)
+    public override State Tick(EnemyManager aiCharacter)
     {
         //Searches for potential target within the detection radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, aiCharacter.detectionRadius, detectionLayer);

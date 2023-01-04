@@ -9,7 +9,7 @@ public class RotateTowardsTargetStateHumanoid : State
     {
         combatStanceState = GetComponent<CombatStanceStateHumanoid>();
     }
-    public override State Tick(CharacterManager enemy)
+    public override State Tick(EnemyManager enemy)
     {
         enemy.animator.SetFloat("Vertical", 0);
         enemy.animator.SetFloat("Horizontal", 0);

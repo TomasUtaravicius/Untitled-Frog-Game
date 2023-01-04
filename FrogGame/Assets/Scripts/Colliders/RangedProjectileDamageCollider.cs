@@ -73,4 +73,12 @@ public class RangedProjectileDamageCollider : DamageCollider
             gameObject.transform.parent = collision.collider.transform;
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (arrowRigidbody.velocity != Vector3.zero)
+        {
+            arrowRigidbody.rotation = Quaternion.LookRotation(arrowRigidbody.velocity);
+        }
+    }
 }

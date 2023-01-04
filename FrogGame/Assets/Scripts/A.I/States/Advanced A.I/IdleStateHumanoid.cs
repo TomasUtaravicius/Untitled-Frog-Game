@@ -47,6 +47,7 @@ public class IdleStateHumanoid : State
                         else
                         {
                             aiCharacter.currentTarget = targetCharacter;
+                            return pursueState;
                         }
                         
                     }

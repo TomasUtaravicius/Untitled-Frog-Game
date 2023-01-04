@@ -84,7 +84,7 @@ public class PlayerAnimatorHandler : CharacterAnimatorHandler
             return;
         }
 
-        float delta = Time.deltaTime;
+        float delta = Time.fixedDeltaTime;
         Vector3 deltaPosition = player.animator.deltaPosition;
         Vector3 velocity = deltaPosition / delta;
         player.playerLocomotionManager.AddVelocity(velocity);

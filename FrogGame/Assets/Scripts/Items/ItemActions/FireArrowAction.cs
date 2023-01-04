@@ -15,7 +15,7 @@ public class FireArrowAction : ItemAction
         arrowInstantiationTransform = character.characterWeaponSlotManager.rightHandSlot.GetComponentInChildren<ArrowInstantiationTransform>();
 
         //Animate the Bow
-        Animator bowAnimator = character.characterWeaponSlotManager.rightHandSlot.currentWeaponModel.GetComponentInChildren<Animator>();
+        Animator bowAnimator = character.characterWeaponSlotManager.rightHandSlot.currentItemModel.GetComponentInChildren<Animator>();
         bowAnimator.SetBool("IsDrawn", false);
         bowAnimator.Play("Bow_Fire_01");
 

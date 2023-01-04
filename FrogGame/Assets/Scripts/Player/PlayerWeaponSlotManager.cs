@@ -82,13 +82,13 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
             else
             {
                 player.playerAnimatorHandler.PlayTargetAnimation("Both Arms Empty", false, true);
-                backSlot.UnloadWeaponAndDestroy();
+                backSlot.UnloadItemAndDestroy();
             }
 
             Debug.Log("Player is in Combat, loading in right hand slot");
             rightHandSlot.currentWeapon = weaponItem;
             rightHandSlot.LoadWeaponModel(weaponItem);
-            backSlot.UnloadWeaponAndDestroy();
+            backSlot.UnloadItemAndDestroy();
             LoadTwoHandIKTargets(player.inputHandler.twoHandFlag);
             LoadDamageCollider();
             player.quickSlotsUI.UpdateWeaponQuickSlotsUI(false, weaponItem);
@@ -99,7 +99,7 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
             Debug.Log("Player is not in combat, loading in backslot");
             backSlot.LoadWeaponModel(player.playerInventoryManager.meleeWeapon);
             backSlot.currentWeapon = player.playerInventoryManager.meleeWeapon;
-            rightHandSlot.UnloadWeaponAndDestroy();
+            rightHandSlot.UnloadItemAndDestroy();
             LoadTwoHandIKTargets(false);
             player.playerAnimatorHandler.PlayTargetAnimation("Both Arms Empty", false, true);
 
@@ -176,12 +176,12 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
 
     public void LoadDamageCollider()
     {
-        rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+        rightHandDamageCollider = rightHandSlot.currentItemModel.GetComponentInChildren<DamageCollider>();
         rightHandDamageCollider.currentWeaponDamage = player.playerInventoryManager.meleeWeapon.baseDamage;
         rightHandDamageCollider.characterManager = player;
         rightHandDamageCollider.poiseBreak = player.playerInventoryManager.meleeWeapon.poiseBreak;
         rightHandDamageCollider.teamIDNumber = player.characterStatsManager.teamIDNumber;
-        player.characterEffectsManager.rightWeaponFX = rightHandSlot.currentWeaponModel.GetComponentInChildren<WeaponFX>();
+        player.characterEffectsManager.rightWeaponFX = rightHandSlot.currentItemModel.GetComponentInChildren<WeaponFX>();
     }
 
 
@@ -189,8 +189,8 @@ public class PlayerWeaponSlotManager : CharacterWeaponSlotManager
     {
         if(player.isArmed)
         {
-            leftHandIKTarget = rightHandSlot.currentWeaponModel.GetComponentInChildren<LeftHandIKTarget>();
-            rightHandIKTarget = rightHandSlot.currentWeaponModel.GetComponentInChildren<RightHandIKTarget>();
+            leftHandIKTarget = rightHandSlot.currentItemModel.GetComponentInChildren<LeftHandIKTarget>();
+            rightHandIKTarget = rightHandSlot.currentItemModel.GetComponentInChildren<RightHandIKTarget>();
         }
         else
         {

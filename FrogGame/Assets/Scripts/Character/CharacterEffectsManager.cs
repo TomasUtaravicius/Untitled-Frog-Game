@@ -68,7 +68,7 @@ public class CharacterEffectsManager : MonoBehaviour
         {
 
             character.animator.SetBool("IsHoldingArrow",false);
-            Animator rangedWeaponAnimator = character.characterWeaponSlotManager.rightHandSlot.currentWeaponModel.GetComponentInChildren<Animator>();
+            Animator rangedWeaponAnimator = character.characterWeaponSlotManager.rightHandSlot.currentItemModel.GetComponentInChildren<Animator>();
 
             if(rangedWeaponAnimator!=null)
             {

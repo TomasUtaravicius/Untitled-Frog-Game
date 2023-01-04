@@ -15,7 +15,7 @@ public class AIManager : CharacterManager
 
     public Rigidbody rigidbody;
     public NavMeshAgent navMeshAgent;
-    public State currentState;
+    public AIState currentState;
 
 
     public bool isPerformingAction;
@@ -33,6 +33,10 @@ public class AIManager : CharacterManager
         enemyEffectsManager = GetComponent<EnemyEffectsManager>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         rigidbody = GetComponent<Rigidbody>();
+    }
+    protected override void FixedUpdate()
+    {
+
     }
     private void Start()
     {
@@ -56,7 +60,7 @@ public class AIManager : CharacterManager
     {
         if (currentState != null)
         {
-            State nextState = currentState.Tick(this);
+            AIState nextState = currentState.Tick(this);
 
             if (nextState != null)
             {
@@ -65,7 +69,7 @@ public class AIManager : CharacterManager
         }
     }
 
-    private void SwitchToNextState(State nextState)
+    private void SwitchToNextState(AIState nextState)
     {
         currentState = nextState;
     }

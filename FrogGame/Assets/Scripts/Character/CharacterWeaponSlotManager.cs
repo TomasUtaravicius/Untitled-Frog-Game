@@ -59,6 +59,24 @@ public class CharacterWeaponSlotManager : MonoBehaviour
             LoadWeaponOnSlot(character.characterInventoryManager.leftWeapon, true);
         }
     }
+    public virtual void LoadItemOnSlot(ToolItem toolItem, bool isLeft)
+    {
+
+        if (toolItem != null)
+        {
+            if (isLeft)
+            {
+                leftHandSlot.currentTool = toolItem;
+                leftHandSlot.LoadToolModel(toolItem);
+            }
+            else
+            {
+                leftHandSlot.currentTool = toolItem;
+                leftHandSlot.LoadToolModel(toolItem);
+                LoadTwoHandIKTargets(character.isTwoHanding);
+            }
+        }
+    }
     public virtual void LoadWeaponOnSlot(WeaponItem weaponItem, bool isLeft)
     {
         if (weaponItem != null)
@@ -75,7 +93,7 @@ public class CharacterWeaponSlotManager : MonoBehaviour
                 if (character.isTwoHanding)
                 {
                     backSlot.LoadWeaponModel(leftHandSlot.currentWeapon);
-                    leftHandSlot.UnloadWeaponAndDestroy();
+                    leftHandSlot.UnloadItemAndDestroy();
                     character.characterAnimatorHandler.PlayTargetAnimation("Left Arm Empty", false, true);
 
                     if(weaponItem.weaponType==WeaponType.Sword)
@@ -86,7 +104,7 @@ public class CharacterWeaponSlotManager : MonoBehaviour
                     character.characterAnimatorHandler.PlayTargetAnimation("Both Arms Empty", false, true);
                     if(backSlot!=null)
                     {
-                        backSlot.UnloadWeaponAndDestroy();
+                        backSlot.UnloadItemAndDestroy();
                     }
                     
                 }
@@ -129,28 +147,28 @@ public class CharacterWeaponSlotManager : MonoBehaviour
     }
     protected virtual void LoadLeftWeaponDamageCollider()
     {
-        leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+        leftHandDamageCollider = leftHandSlot.currentItemModel.GetComponentInChildren<DamageCollider>();
         leftHandDamageCollider.currentWeaponDamage = character.characterInventoryManager.leftWeapon.baseDamage;
         leftHandDamageCollider.characterManager = character;
         leftHandDamageCollider.poiseBreak = character.characterInventoryManager.leftWeapon.poiseBreak;
         leftHandDamageCollider.teamIDNumber = character.characterStatsManager.teamIDNumber;
-        character.characterEffectsManager.leftWeaponFX = leftHandSlot.currentWeaponModel.GetComponentInChildren<WeaponFX>();
+        character.characterEffectsManager.leftWeaponFX = leftHandSlot.currentItemModel.GetComponentInChildren<WeaponFX>();
     }
     
     protected virtual void LoadRightWeaponDamageCollider()
     {
-        rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+        rightHandDamageCollider = rightHandSlot.currentItemModel.GetComponentInChildren<DamageCollider>();
         rightHandDamageCollider.currentWeaponDamage = character.characterInventoryManager.rightWeapon.baseDamage;
         rightHandDamageCollider.characterManager = character;
         rightHandDamageCollider.poiseBreak = character.characterInventoryManager.rightWeapon.poiseBreak;
         rightHandDamageCollider.teamIDNumber = character.characterStatsManager.teamIDNumber;
-        character.characterEffectsManager.rightWeaponFX = rightHandSlot.currentWeaponModel.GetComponentInChildren<WeaponFX>();
+        character.characterEffectsManager.rightWeaponFX = rightHandSlot.currentItemModel.GetComponentInChildren<WeaponFX>();
     }
 
     protected virtual void LoadTwoHandIKTargets(bool isTwoHanding)
     {
-        leftHandIKTarget = rightHandSlot.currentWeaponModel.GetComponentInChildren<LeftHandIKTarget>();
-        rightHandIKTarget = rightHandSlot.currentWeaponModel.GetComponentInChildren<RightHandIKTarget>();
+        leftHandIKTarget = rightHandSlot.currentItemModel.GetComponentInChildren<LeftHandIKTarget>();
+        rightHandIKTarget = rightHandSlot.currentItemModel.GetComponentInChildren<RightHandIKTarget>();
 
         Debug.LogWarning("Load Two Hand IK Targets");
         character.characterAnimatorHandler.SetHandIKForWeapon(rightHandIKTarget, leftHandIKTarget, isTwoHanding);

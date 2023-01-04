@@ -75,6 +75,9 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
     public PlayerManager player;
     public Vector3 movementVector;
     private Vector3 _internalVelocityAdd = Vector3.zero;
+
+    public Collider characterCollider;
+    public Collider characterCollisionBlocker;
     private void Start()
     {
         // Assign to motor
@@ -82,6 +85,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
         airTime = 0f;
         hasJumped = false;
         isFalling = false;
+        Physics.IgnoreCollision(characterCollider, characterCollisionBlocker, true);
     }
 
     /// <summary>

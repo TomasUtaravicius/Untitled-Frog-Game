@@ -5,6 +5,14 @@ using UnityEngine;
 public class PlayerSoundFXManager : CharacterSoundFXManager
 {
     PlayerManager player;
+    public AudioSource footStepSource;
+    public AudioClip[] stoneClips;
+    public AudioClip[] dirtClips;
+    public AudioClip[] sandClips;
+    public AudioClip[] grassClips;
+    public CheckTerrainTexture terrainChecker;
+    AudioClip previousClip;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -46,4 +54,41 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
 
 
     }
+    
+    public void PlayFootstep()
+    {
+        terrainChecker.GetTerrainTexture();
+        if (terrainChecker.textureValues[0] > 0)
+        {
+            footStepSource.PlayOneShot(GetClip(stoneClips), terrainChecker.textureValues[0]);
+        }
+        if (terrainChecker.textureValues[1] > 0)
+        {
+            footStepSource.PlayOneShot(GetClip(grassClips), terrainChecker.textureValues[1]);
+        }
+        if (terrainChecker.textureValues[2] > 0)
+        {
+            footStepSource.PlayOneShot(GetClip(dirtClips), terrainChecker.textureValues[2]);
+        }
+        if (terrainChecker.textureValues[3] > 0)
+        {
+            footStepSource.PlayOneShot(GetClip(sandClips), terrainChecker.textureValues[3]);
+        }
+    }
+    AudioClip GetClip(AudioClip[] clipArray)
+    {
+        int attempts = 3;
+        AudioClip selectedClip =
+        clipArray[Random.Range(0, clipArray.Length - 1)];
+        while (selectedClip == previousClip && attempts > 0)
+        {
+            selectedClip =
+            clipArray[Random.Range(0, clipArray.Length - 1)];
+
+            attempts--;
+        }
+        previousClip = selectedClip;
+        return selectedClip;
+    }
+
 }

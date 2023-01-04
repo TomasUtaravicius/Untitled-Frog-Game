@@ -22,7 +22,7 @@ public class DrinkItem : ConsumableItem
         playerEffectsManager.currentParticleFX = recoveryFX;
         playerEffectsManager.amountToBeHealed = healthRecoverAmount;
         playerEffectsManager.instantiatedFXModel = Instantiate(itemModel, weaponSlotManager.leftHandSlot.transform);
-        weaponSlotManager.leftHandSlot.UnloadWeapon();
+        weaponSlotManager.leftHandSlot.UnloadItem();
         
 
     }

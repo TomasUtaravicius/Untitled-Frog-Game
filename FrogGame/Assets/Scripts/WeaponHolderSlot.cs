@@ -6,32 +6,33 @@ public class WeaponHolderSlot : MonoBehaviour
 {
     public Transform parentOverride;
     public WeaponItem currentWeapon;
+    public ToolItem currentTool;
     public bool isLeftHandSlot;
     public bool isRightHandSlot;
     public bool isBackSlot;
     public bool isSideSlot;
-    public GameObject currentWeaponModel;
+    public GameObject currentItemModel;
 
-    public void UnloadWeapon()
+    public void UnloadItem()
     {
-        if(currentWeaponModel != null)
+        if(currentItemModel != null)
         {
-            currentWeaponModel.SetActive(false);
+            currentItemModel.SetActive(false);
         }
     }
-    public void UnloadWeaponAndDestroy()
+    public void UnloadItemAndDestroy()
     {
-        if(currentWeaponModel!=null)
+        if(currentItemModel!=null)
         {
-            Destroy(currentWeaponModel);
+            Destroy(currentItemModel);
         }
     }
     public void LoadWeaponModel(WeaponItem weaponItem)
     {
-        UnloadWeaponAndDestroy();
+        UnloadItemAndDestroy();
         if(weaponItem==null)
         {
-            UnloadWeapon();
+            UnloadItem();
             return;
         }
 
@@ -50,6 +51,32 @@ public class WeaponHolderSlot : MonoBehaviour
             model.transform.localRotation = Quaternion.identity;
             model.transform.localScale = Vector3.one;
         }
-        currentWeaponModel = model;
+        currentItemModel = model;
+    }
+    public void LoadToolModel(ToolItem tool)
+    {
+        UnloadItemAndDestroy();
+        if (tool == null)
+        {
+            UnloadItem();
+            return;
+        }
+
+        GameObject model = Instantiate(tool.modelPrefab) as GameObject;
+        if (model != null)
+        {
+            if (parentOverride != null)
+            {
+                model.transform.parent = parentOverride;
+            }
+            else
+            {
+                model.transform.parent = transform;
+            }
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localRotation = Quaternion.identity;
+            model.transform.localScale = Vector3.one;
+        }
+        currentItemModel = model;
     }
 }

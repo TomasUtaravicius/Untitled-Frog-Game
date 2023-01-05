@@ -73,5 +73,9 @@ public class AIManager : CharacterManager
     {
         currentState = nextState;
     }
+    public void InteractWithPlayer(PlayerManager player)
+    {
+
+    }
 
 }

@@ -106,7 +106,7 @@ public class PlayerManager : CharacterManager
         playerStatsManager.RegenerateStamina();
 
         HandleInCombatState();
-       
+        CheckForFriendly();
 
         //CheckForInteractable();
     }
@@ -183,6 +183,7 @@ public class PlayerManager : CharacterManager
     {
         //Player ID is 1
         //Enemy ID is 0
+        //NPC ID is 1
 
         Collider[] colliders = Physics.OverlapSphere(transform.position, 15f, detectionLayer);
 
@@ -196,35 +197,41 @@ public class PlayerManager : CharacterManager
                 if (targetCharacter != null)
                 {
 
-                    if (targetCharacter.characterStatsManager.teamIDNumber == 1)
+                    if (targetCharacter.characterStatsManager.type == NPCType.Enemy)
                     {
                         return true;
                     }
-                    if (targetCharacter.characterStatsManager.teamIDNumber == characterStatsManager.teamIDNumber)
-                    {
+                    if (targetCharacter.characterStatsManager.type == NPCType.Enemy && targetCharacter.isDead)
                         return false;
+                }
+            }
+
+        }
+        return false;
+    }
+    public bool CheckForFriendly()
+    {
+        //Player ID is 1
+        //Enemy ID is 0
+        //NPC ID is 1
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, 3f, detectionLayer);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            CharacterManager targetCharacter = colliders[i].transform.GetComponent<CharacterManager>();
+
+
+            if (targetCharacter.gameObject.name != gameObject.name)
+            {
+                if (targetCharacter != null)
+                {
+
+                    if (targetCharacter.characterStatsManager.type == NPCType.Friendly)
+                    {
+                        Debug.LogWarning("Friendly AI Nearby, ready to interact");
+                        return true;
                     }
-                    if (targetCharacter.isDead)
-                        return false;
-
-                    return true;
-                    /*Vector3 targetDirection = targetCharacter.transform.position - transform.position;
-                    float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
-
-                    //if potential target is found it has to be standing infront of the AI's field of view
-                    if (viewableAngle > aiCharacter.minimumDetectionAngle && viewableAngle < aiCharacter.maximimumDetectionAngle)
-                    {
-                        //If our potential target has an obstacle in between, don't do anything
-                        if (Physics.Linecast(aiCharacter.lockOnTransform.position, targetCharacter.lockOnTransform.position, layerBlockingLineOfSight))
-                        {
-                            return this;
-                        }
-                        else
-                        {
-                            aiCharacter.currentTarget = targetCharacter;
-                        }
-
-                    }*/
                 }
             }
 

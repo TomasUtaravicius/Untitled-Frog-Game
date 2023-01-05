@@ -19,6 +19,12 @@ public enum AmmoType
     Arrow,
     Bolt
 }
+public enum NPCType
+{
+    Enemy,
+    Friendly,
+    Player
+}
 public enum AttackType
 {
     Light,

@@ -1,0 +1,12 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/FrogGameSS.uss?fileID=7433441132597879392&amp;guid=123143116c723fa45bebe5a0adf3451f&amp;type=3#FrogGameSS" />
+    <ui:VisualElement style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="DaytimeContainer" class="daytimeBackground" style="width: 300px; height: 150px; align-items: center; flex-wrap: nowrap; top: 15px; padding-right: 15px; padding-left: 15px; padding-top: 15px; padding-bottom: 15px; margin-top: 0; background-color: rgba(0, 0, 0, 0.33); justify-content: center; position: absolute; right: 15px;">
+            <ui:Label text="Daytime: " display-tooltip-when-elided="true" style="position: relative; flex-direction: column; justify-content: center; font-size: 36px; -unity-font: url(&apos;project://database/Packages/com.unity.searcher/Editor/Resources/FlatSkin/Font/Roboto-Light.ttf?fileID=12800000&amp;guid=2a29e27936eb547458f646f71125b264&amp;type=3#Roboto-Light&apos;); -unity-font-definition: none; -unity-font-style: normal; background-color: rgba(0, 0, 0, 0); transition-property: all; transition-duration: 1s; transition-timing-function: ease; transition-delay: 0s; left: 0;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="CurrentEquipmentContainer" style="position: absolute; left: 80px; bottom: 60px; width: 178px; height: 300px; background-color: rgba(60, 60, 60, 255); rotate: -30deg;">
+            <ui:VisualElement name="RangedWeapon" class="weaponSlot" style="position: absolute; left: 40px; top: 30px;" />
+            <ui:VisualElement name="MeleeWeapon" class="weaponSlot" style="top: 160px; left: 40px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

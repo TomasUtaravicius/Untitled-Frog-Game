@@ -6,6 +6,8 @@ public class CharacterStatsManager : MonoBehaviour
 {
     public CharacterManager character;
     [Header("Team I.D")]
+
+    public NPCType type;
     public int teamIDNumber = 0;
     public int healthLevel = 10;
     public int maxHealth;

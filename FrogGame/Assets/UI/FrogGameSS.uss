@@ -1,0 +1,18 @@
+.button {
+    background-color: rgba(255, 255, 255, 255);
+}
+
+.daytimeBackground {
+    background-color: rgb(219, 117, 117);
+}
+
+.weaponSlot {
+    background-color: rgba(202, 202, 202, 255);
+    width: 100px;
+    height: 100px;
+    rotate: 30deg;
+}
+
+.test {
+    background-color: rgba(255, 255, 255, 255);
+}

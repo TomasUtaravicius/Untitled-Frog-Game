@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class CheckTerrainTexture : MonoBehaviour
 {
-    public Transform playerTransform;
+    public Transform characterTransform;
     public Terrain t;
     public int posX;
     public int posZ;
@@ -11,7 +11,7 @@ public class CheckTerrainTexture : MonoBehaviour
     void Start()
     {
         t = Terrain.activeTerrain;
-        playerTransform = gameObject.transform;
+        characterTransform = gameObject.transform;
     }
     void Update()
     {
@@ -21,12 +21,13 @@ public class CheckTerrainTexture : MonoBehaviour
     }
     public void GetTerrainTexture()
     {
-        ConvertPosition(playerTransform.position);
+        ConvertPosition(characterTransform.position);
         CheckTexture();
     }
     void ConvertPosition(Vector3 playerPosition)
     {
         Vector3 terrainPosition = playerPosition - t.transform.position;
+        //Debug.Log("Character above ground: " + )
         Vector3 mapPosition = new Vector3
         (terrainPosition.x / t.terrainData.size.x, 0,
         terrainPosition.z / t.terrainData.size.z);

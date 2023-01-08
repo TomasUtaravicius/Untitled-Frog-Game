@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,11 +37,14 @@ public class PlayerManager : CharacterManager
     public float stayInCombatTimer;
     private float lastCombatTimer;
     public bool isDrawing;
+    public bool eligibleForInteraction;
+    AIManager eligibleAIToInteractWith;
 
     protected override void Awake()
     {
         base.Awake();
         isInCombat = false;
+        eligibleForInteraction = false;
         cameraHandler = FindObjectOfType<CameraHandler>();
         backstabCollider = GetComponentInChildren<CriticalDamageCollider>();
 
@@ -106,7 +110,15 @@ public class PlayerManager : CharacterManager
         playerStatsManager.RegenerateStamina();
 
         HandleInCombatState();
-        CheckForFriendly();
+
+        if (isInteracting)
+        {
+            eligibleForInteraction = false;
+            return;
+        }
+
+
+        eligibleForInteraction = CheckForFriendly();
 
         //CheckForInteractable();
     }
@@ -229,13 +241,18 @@ public class PlayerManager : CharacterManager
 
                     if (targetCharacter.characterStatsManager.type == NPCType.Friendly)
                     {
-                        Debug.LogWarning("Friendly AI Nearby, ready to interact");
+                        AIManager ai = targetCharacter as AIManager;
+                        if (ai.interruptedByPlayer)
+                            return false;
+                        //Debug.LogWarning("Friendly AI Nearby, ready to interact");
+                        eligibleAIToInteractWith = targetCharacter as AIManager;
                         return true;
                     }
                 }
             }
 
         }
+        eligibleAIToInteractWith = null;
         return false;
     }
     public void CheckForInteractable()
@@ -282,5 +299,11 @@ public class PlayerManager : CharacterManager
         transform.position = playerStandsHereWhenOpeningChest.transform.position;
         playerAnimatorHandler.PlayTargetAnimation("Open Chest", true);
         //playerLocomotionManager.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    }
+    
+    public void InteractWithAI()
+    {
+        if (eligibleAIToInteractWith != null)
+        eligibleAIToInteractWith.InteractWithPlayer(this);
     }
 }

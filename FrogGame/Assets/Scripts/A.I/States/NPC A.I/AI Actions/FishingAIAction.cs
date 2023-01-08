@@ -8,6 +8,7 @@ public class FishingAIAction : AIAction
     public ToolItem fishingRod;
     public override void PerformAction(AIManager character)
     {
+
         if (character.isInteracting)
         {
             return;
@@ -15,5 +16,10 @@ public class FishingAIAction : AIAction
         character.characterWeaponSlotManager.LoadItemOnSlot(fishingRod, true);
         character.characterAnimatorHandler.PlayTargetAnimation("Fishing Cast", true, false);
         
+    }
+    public void StopPerformingAction(AIManager character)
+    {
+        character.characterWeaponSlotManager.UnloadWeaponOnSlot(true);
+        character.characterAnimatorHandler.PlayTargetAnimation("Empty", false);
     }
 }

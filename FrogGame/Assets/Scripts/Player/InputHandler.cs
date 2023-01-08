@@ -521,7 +521,8 @@ public class InputHandler : MonoBehaviour
         if(x_Input)
         {
             x_Input = false;
-            player.playerInventoryManager.currentConsumable.AttemptToConsumeItem(player.playerAnimatorHandler, player.playerWeaponSlotManager, player.playerEffectsManager);
+            player.InteractWithAI();
+            //player.playerInventoryManager.currentConsumable.AttemptToConsumeItem(player.playerAnimatorHandler, player.playerWeaponSlotManager, player.playerEffectsManager);
         }
     }
 

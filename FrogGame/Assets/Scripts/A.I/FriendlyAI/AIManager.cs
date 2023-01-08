@@ -5,20 +5,14 @@ using UnityEngine.AI;
 
 public class AIManager : CharacterManager
 {
-    public EnemyLocomotionManager enemyLocomotionManager;
-    public EnemyAnimatorHandler enemyAnimatorHandler;
-    public EnemyStatsManager enemyStatsManager;
-    public EnemyEffectsManager enemyEffectsManager;
-    public EnemyBossManager enemyBossManager;
-
-    public CharacterManager currentTarget;
-
     public Rigidbody rigidbody;
     public NavMeshAgent navMeshAgent;
     public AIState currentState;
+    public bool interruptedByPlayer;
 
 
     public bool isPerformingAction;
+    public PlayerManager playerToInteractWith;
 
     [Header("A.I. Settings")]
     public float rotationSpeed = 15f;
@@ -26,17 +20,12 @@ public class AIManager : CharacterManager
     protected override void Awake()
     {
         base.Awake();
-        enemyLocomotionManager = GetComponent<EnemyLocomotionManager>();
-        enemyBossManager = GetComponent<EnemyBossManager>();
-        enemyAnimatorHandler = GetComponent<EnemyAnimatorHandler>();
-        enemyStatsManager = GetComponent<EnemyStatsManager>();
-        enemyEffectsManager = GetComponent<EnemyEffectsManager>();
-        navMeshAgent = GetComponentInChildren<NavMeshAgent>();
         rigidbody = GetComponent<Rigidbody>();
+        navMeshAgent = GetComponentInChildren<NavMeshAgent>();
     }
     protected override void FixedUpdate()
     {
-
+        this.characterAnimatorHandler.CheckHeadIKWeight();
     }
     private void Start()
     {
@@ -75,7 +64,13 @@ public class AIManager : CharacterManager
     }
     public void InteractWithPlayer(PlayerManager player)
     {
-
+        interruptedByPlayer = true;
+        playerToInteractWith = player;
+    }
+    public void FinishInteractingWithPlayer()
+    {
+        interruptedByPlayer = false;
+        playerToInteractWith = null;
     }
 
 }

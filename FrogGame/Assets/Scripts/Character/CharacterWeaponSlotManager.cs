@@ -77,6 +77,18 @@ public class CharacterWeaponSlotManager : MonoBehaviour
             }
         }
     }
+    public virtual void UnloadWeaponOnSlot(bool isLeft)
+    {
+        if(isLeft)
+        {
+            leftHandSlot.UnloadItemAndDestroy();
+        }
+        else
+        {
+            rightHandSlot.UnloadItemAndDestroy();
+        }
+        
+    }
     public virtual void LoadWeaponOnSlot(WeaponItem weaponItem, bool isLeft)
     {
         if (weaponItem != null)

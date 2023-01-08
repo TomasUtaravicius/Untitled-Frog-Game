@@ -71,4 +71,8 @@ public class CharacterSoundFXManager : MonoBehaviour
         
 
     }
+    public virtual void SayDialogue(AudioClip dialogue)
+    {
+        audioSource.PlayOneShot(dialogue);
+    }
 }

@@ -9,8 +9,12 @@ public class CharacterAnimatorHandler : MonoBehaviour
     protected RigBuilder rigBuilder;
     public TwoBoneIKConstraint leftHandConstraint;
     public TwoBoneIKConstraint rightHandConstraint;
+    public MultiAimConstraint headLookContraint;
+    public MultiAimConstraint chestLookContraint;
 
     bool handIKWeightsReset = false;
+    bool headLookWeightReset = false;
+    public HeadLookIKTarget lookTarget;
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
@@ -120,6 +124,21 @@ public class CharacterAnimatorHandler : MonoBehaviour
         }
         rigBuilder.Build();
     }
+    public virtual void SetHeadIKToTarget(HeadLookIKTarget target,float weight)
+    {
+        if(target!=null)
+        {
+            headLookWeightReset = true;
+            lookTarget.transform.position = target.transform.position;
+
+            headLookContraint.weight = weight;
+            headLookContraint.weight = weight;
+            chestLookContraint.weight = weight;
+            chestLookContraint.weight = weight;
+        }
+                
+            
+    }
     public virtual void CheckHandIKWeight(RightHandIKTarget rightHandIK, LeftHandIKTarget leftHandIK, bool isTwoHand)
     {
         if(character.isInteracting)
@@ -145,6 +164,17 @@ public class CharacterAnimatorHandler : MonoBehaviour
             }
         }
     }
+    public virtual void CheckHeadIKWeight()
+    {
+        /*if(headLookWeightReset)
+        {
+            headLookWeightReset = false;
+            headLookContraint.weight = 1;
+            headLookContraint.weight = 1;
+            chestLookContraint.weight = 1;
+            chestLookContraint.weight = 1;
+        }*/
+    }
     public virtual void EraseHandIKForWeapon()
     {
         handIKWeightsReset = true;
@@ -162,6 +192,14 @@ public class CharacterAnimatorHandler : MonoBehaviour
         
 
         
+    }
+    public virtual void EraseHeadIK()
+    {
+        headLookWeightReset = true;
+        headLookContraint.weight = 0;
+        headLookContraint.weight = 0;
+        chestLookContraint.weight = 0;
+        chestLookContraint.weight = 0;
     }
 
 

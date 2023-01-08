@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
+    public TextMeshProUGUI dialogueText;
+    public TextMeshProUGUI interactionPrompt;
+    public PlayerManager player;
     public PlayerInventoryManager playerInventoryManager;
     public EquipmentWindowUI equipmentWindowUI;
     private QuickSlotsUI quickSlotsUI;
@@ -37,6 +41,17 @@ public class UIManager : MonoBehaviour
         //quickSlotsUI.UpdateCurrentConsumableIcon(playerInventoryManager.currentConsumable);
        //quickSlotsUI.UpdateCurrentSpellIcon(playerInventoryManager.currentSpell);
     }
+    public void FixedUpdate()
+    {
+        if (player.eligibleForInteraction)
+        {
+            EnableInteractionPrompt();
+        }
+        else
+        {
+            DisableInteractionPrompt();
+        }
+    }
     public void UpdateUI()
     {
         #region Weapon Inventory Slots
@@ -58,8 +73,17 @@ public class UIManager : MonoBehaviour
                 weaponInventorySlots[i].ClearInventorySlot();
             }*/
         }
+       
 
         #endregion
+    }
+    public void EnableInteractionPrompt()
+    {
+        interactionPrompt.gameObject.SetActive(true);
+    }
+    public void DisableInteractionPrompt()
+    {
+        interactionPrompt.gameObject.SetActive(false);
     }
     public void OpenSelectWindow()
     {
@@ -82,5 +106,10 @@ public class UIManager : MonoBehaviour
         leftHandSlot01Selected = false;
         leftHandSlot02Selected = false;
     }
+    public void UpdateSubtitleText(string subtitleText)
+    {
+        dialogueText.text = subtitleText;
+    }
+    
 
 }

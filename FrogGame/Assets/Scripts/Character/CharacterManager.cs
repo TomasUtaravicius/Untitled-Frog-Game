@@ -66,6 +66,7 @@ public class CharacterManager : MonoBehaviour
     public bool isUsingRightHand;
 
     public int pendingCriticalDamage;
+    public HeadLookIKTarget eyeLevel;
 
     protected virtual void Awake()
     {

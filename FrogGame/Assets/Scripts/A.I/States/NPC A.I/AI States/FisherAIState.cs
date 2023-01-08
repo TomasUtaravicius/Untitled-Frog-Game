@@ -6,6 +6,11 @@ public class FisherAIState : AIState
 {
     [SerializeField]
     FishingAIAction fishingAction;
+
+   // [SerializeField]
+   // SaySomethingAIAction interactWithPlayerAction;
+    [SerializeField]
+    SaySomethingAIState saySomethingState;
     [SerializeField]
     float stateDuration;
     float stateTimeElapsed;
@@ -16,12 +21,23 @@ public class FisherAIState : AIState
     public override AIState Tick(AIManager aiCharacter)
     {
         aiCharacter.animator.SetFloat("Vertical", 0f, 0.2f, Time.deltaTime);
+
+        if(aiCharacter.interruptedByPlayer)
+        {
+            Debug.Log("Interrupted by the player");
+            fishingAction.StopPerformingAction(aiCharacter);
+            saySomethingState.StartState();
+            saySomethingState.interruptedState = this;
+            return saySomethingState;
+            
+        }
         if (aiCharacter.isInteracting)
         {
             return this;
         }
         if(RotateTowardsTarget(aiCharacter))
         {
+            aiCharacter.characterAnimatorHandler.EraseHeadIK();
             fishingAction.PerformAction(aiCharacter);
         }
         return this;

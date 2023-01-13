@@ -10,7 +10,7 @@ public class SaySomethingAIAction : AIAction
     [SerializeField]
     string dialoguePiece;
     [SerializeField]
-    float actionDuration;
+    public float actionDuration;
     [SerializeField]
     string anim;
     [SerializeField]
@@ -21,8 +21,16 @@ public class SaySomethingAIAction : AIAction
     {
         if(overrideAnimation)
         {
-            aiCharacter.characterAnimatorHandler.PlayTargetAnimation(anim, true);
-            aiCharacter.animator.SetFloat("Vertical", 0f, 0.2f, Time.deltaTime);
+            if(aiCharacter.characterAnimatorHandler)
+            {
+                aiCharacter.characterAnimatorHandler.PlayTargetAnimation(anim, true);
+                aiCharacter.animator.SetFloat("Vertical", 0f, 0.2f, Time.deltaTime);
+            }
+            else
+            {
+                aiCharacter.animator.Play(anim);
+            }
+            
         }
         aiCharacter.characterSoundFXManager.SayDialogue(actionDialogueAudio);
         GameDialogueManager.instance.EnableDialogue(actionDuration, dialoguePiece);

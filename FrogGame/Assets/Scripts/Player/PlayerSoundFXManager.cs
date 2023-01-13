@@ -10,6 +10,7 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
     public AudioClip[] dirtClips;
     public AudioClip[] sandClips;
     public AudioClip[] grassClips;
+    public AudioClip[] woodClips;
     public CheckTerrainTexture terrainChecker;
     AudioClip previousClip;
 
@@ -58,7 +59,12 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
     public void PlayFootstep()
     {
         terrainChecker.GetTerrainTexture();
-        if(terrainChecker.movingOnTerrain)
+        if(player.isInAir)
+        {
+            return;
+        }
+
+        if(terrainChecker.walkingOnType==EnvironmentTypes.Terrain)
         {
             if (terrainChecker.textureValues[0] > 0)
             {
@@ -77,9 +83,9 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
                 footStepSource.PlayOneShot(GetClip(sandClips), terrainChecker.textureValues[3]);
             }
         }
-        else
+        else if(terrainChecker.walkingOnType == EnvironmentTypes.Wood)
         {
-
+            footStepSource.PlayOneShot(GetClip(woodClips));
         }
         
     }

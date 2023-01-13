@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnvironmentTypes
+{
+    Wood,
+    Terrain
+}
 public enum WeaponType
 {
     FireCaster,

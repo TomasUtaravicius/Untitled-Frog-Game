@@ -8,7 +8,8 @@ public class CheckTerrainTexture : MonoBehaviour
     public int posX;
     public int posZ;
     public float[] textureValues;
-    public bool movingOnTerrain;
+    public EnvironmentTypes walkingOnType;
+    
     void Start()
     {
         t = Terrain.activeTerrain;
@@ -33,14 +34,14 @@ public class CheckTerrainTexture : MonoBehaviour
         (terrainPosition.x / t.terrainData.size.x, terrainPosition.y/ t.terrainData.size.y,
         terrainPosition.z / t.terrainData.size.z);
         //Debug.Log("Character above ground: " + (playerPosition.y - Terrain.activeTerrain.SampleHeight(transform.position)));
-        if(playerPosition.y - Terrain.activeTerrain.SampleHeight(transform.position)>0.05f)
+       /* if(playerPosition.y - Terrain.activeTerrain.SampleHeight(transform.position)>0.05f)
         {
             movingOnTerrain = false;
         }
         else
         {
             movingOnTerrain = true;
-        }
+        }*/
         float xCoord = mapPosition.x * t.terrainData.alphamapWidth;
         float zCoord = mapPosition.z * t.terrainData.alphamapHeight;
         posX = (int)xCoord;
@@ -54,12 +55,16 @@ public class CheckTerrainTexture : MonoBehaviour
         textureValues[2] = aMap[0, 0, 2];
         textureValues[3] = aMap[0, 0, 3];
     }
-    private void OnCollisionStay(Collision collision)
-    {
-        Debug.Log("Walking on: " + collision.gameObject.name);
-    }
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Walking on: " + other.gameObject.name);
+        if(other.gameObject.tag == "Terrain")
+        {
+            walkingOnType = EnvironmentTypes.Terrain;
+        }
+        else if(other.gameObject.tag == "Wood")
+        {
+            walkingOnType = EnvironmentTypes.Wood;
+        }
+
     }
 }

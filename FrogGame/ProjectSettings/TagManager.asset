@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Interactable
   - Character
+  - Wood
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -25,8 +27,8 @@ TagManager:
   - Damagable Collider
   - Damage Collider
   - Projectiles
-  - 
-  - 
+  - Terrain
+  - FootChecker
   - 
   - 
   - 

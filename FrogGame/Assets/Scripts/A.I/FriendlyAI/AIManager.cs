@@ -10,6 +10,7 @@ public class AIManager : CharacterManager
     public AIState currentState;
     public bool interruptedByPlayer;
     public CharacterLocomotionManager locomotionManager;
+    public bool isStatic;
 
     public bool isPerformingAction;
     public PlayerManager playerToInteractWith;
@@ -26,7 +27,11 @@ public class AIManager : CharacterManager
     }
     protected override void FixedUpdate()
     {
-        this.characterAnimatorHandler.CheckHeadIKWeight();
+        if(!isStatic)
+        {
+            this.characterAnimatorHandler.CheckHeadIKWeight();
+        }
+        
     }
     private void Start()
     {

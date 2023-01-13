@@ -3,40 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CharacterState
-{
-    Default,
-}
-
-public enum OrientationMethod
-{
-    TowardsCamera,
-    TowardsMovement,
-}
-
-public struct PlayerCharacterInputs
-{
-    public float MoveAxisForward;
-    public float MoveAxisRight;
-    public Quaternion CameraRotation;
-    public bool JumpDown;
-    public bool CrouchDown;
-    public bool CrouchUp;
-}
-
-public struct AICharacterInputs
-{
-    public Vector3 MoveVector;
-    public Vector3 LookVector;
-}
-
-public enum BonusOrientationMethod
-{
-    None,
-    TowardsGravity,
-    TowardsGroundSlopeAndGravity,
-}
-public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
+public class CharacterLocomotionManager : MonoBehaviour, ICharacterController
 {
     public KinematicCharacterMotor Motor;
 
@@ -72,7 +39,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
     private bool hasJumped;
     private bool isFalling;
 
-    public PlayerManager player;
+    public CharacterManager character;
     public Vector3 movementVector;
     private Vector3 _internalVelocityAdd = Vector3.zero;
 
@@ -150,12 +117,12 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
     /// </summary>
     public void UpdateVelocity(ref Vector3 currentVelocity, float deltaTime)
     {
-        player.playerAnimatorHandler.UpdateAnimatorValues(movementVector.z, movementVector.x, false);
+        character.characterAnimatorHandler.UpdateAnimatorValues(movementVector.z, movementVector.x, false);
         Vector3 targetMovementVelocity = Vector3.zero;
         if (Motor.GroundingStatus.IsStableOnGround)
         {
             hasJumped = false;
-            
+
             // Reorient velocity on slope
             currentVelocity = Motor.GetDirectionTangentToSurface(currentVelocity, Motor.GroundingStatus.GroundNormal) * currentVelocity.magnitude;
             isFalling = false;
@@ -165,7 +132,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
             targetMovementVelocity = reorientedInput * MaxStableMoveSpeed;
 
             // Smooth movement Velocity
-            if(player.isInteracting)
+            if (character.isInteracting)
             {
                 //return;
                 //currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity, 1 - Mathf.Exp(-StableMovementSharpness * deltaTime));
@@ -175,24 +142,24 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
             {
                 currentVelocity = Vector3.Lerp(currentVelocity, targetMovementVelocity, 1 - Mathf.Exp(-StableMovementSharpness * deltaTime));
             }
-          
+
 
             //Debug.Log("On ground and moving");
-            
+
         }
         else
         {
-            player.isInAir = true;
+            character.isInAir = true;
             airTime += Time.deltaTime;
             Debug.LogWarning("Air time: " + airTime);
-            if(hasJumped)
+            if (hasJumped)
             {
 
                 if (airTime > 0.9f && !isFalling)
                 {
                     isFalling = true;
                     Debug.LogWarning("Falling");
-                    player.playerAnimatorHandler.PlayTargetAnimation("Falling", true,0.5f);
+                    character.characterAnimatorHandler.PlayTargetAnimation("Falling", true, 0.5f);
                 }
             }
             else
@@ -201,7 +168,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
                 {
                     isFalling = true;
                     Debug.LogWarning("Falling");
-                    player.playerAnimatorHandler.PlayTargetAnimation("Falling", true, 0.5f);
+                    character.characterAnimatorHandler.PlayTargetAnimation("Falling", true, 0.5f);
                 }
             }
             if (_moveInputVector.sqrMagnitude > 0f)
@@ -232,7 +199,7 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
         _timeSinceJumpRequested += deltaTime;
         if (_jumpRequested)
         {
-            if (player.isInteracting)
+            if (character.isInteracting)
             {
                 return;
             }
@@ -261,16 +228,16 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
 
                 if (movementVector.magnitude > 0.5f)
                 {
-                    player.playerAnimatorHandler.PlayTargetAnimation("Running Jump", false);
-                    player.playerAnimatorHandler.EraseHandIKForWeapon();
+                    character.characterAnimatorHandler.PlayTargetAnimation("Running Jump", false);
+                    character.characterAnimatorHandler.EraseHandIKForWeapon();
                     Debug.Log("Running Jump");
                 }
-            
+
                 else
                 {
                     Debug.Log("Simple Jump");
-                    player.playerAnimatorHandler.PlayTargetAnimation("Jump", false);
-                    player.playerAnimatorHandler.EraseHandIKForWeapon();
+                    character.characterAnimatorHandler.PlayTargetAnimation("Jump", false);
+                    character.characterAnimatorHandler.EraseHandIKForWeapon();
                 }
 
             }
@@ -322,27 +289,27 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
 
     public void OnGroundHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
     {
-        if(player.isInAir)
+        if (character.isInAir)
         {
             isFalling = false;
-            player.isInAir = false;
-            
-            if(hasJumped)
+            character.isInAir = false;
+
+            if (hasJumped)
             {
                 if (airTime > 1f)
                 {
                     Debug.LogWarning("Proper landing");
                     Debug.Log("You were in the air for " + airTime);
-                    player.playerAnimatorHandler.PlayTargetAnimation("Land", true);
-                    
+                    character.characterAnimatorHandler.PlayTargetAnimation("Land", true);
+
 
                 }
                 else
                 {
                     Debug.LogWarning("Empty landing");
                     Debug.Log("You were in the air for " + airTime);
-                    player.playerAnimatorHandler.PlayTargetAnimation("Empty", false);
-                   
+                    character.characterAnimatorHandler.PlayTargetAnimation("Empty", false);
+
                 }
             }
             else
@@ -351,21 +318,21 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
                 {
                     Debug.LogWarning("Proper landing");
                     Debug.Log("You were in the air for " + airTime);
-                    player.playerAnimatorHandler.PlayTargetAnimation("Land", true);
-            
+                    character.characterAnimatorHandler.PlayTargetAnimation("Land", true);
+
 
                 }
                 else
                 {
                     Debug.LogWarning("Empty landing");
                     Debug.Log("You were in the air for " + airTime);
-                    player.playerAnimatorHandler.PlayTargetAnimation("Empty", false);
-                
+                    character.characterAnimatorHandler.PlayTargetAnimation("Empty", false);
+
                 }
             }
             airTime = 0f;
         }
-        
+
     }
 
     public void OnMovementHit(Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref HitStabilityReport hitStabilityReport)
@@ -389,6 +356,3 @@ public class PlayerLocomotionManager : MonoBehaviour, ICharacterController
     {
     }
 }
-
-
-

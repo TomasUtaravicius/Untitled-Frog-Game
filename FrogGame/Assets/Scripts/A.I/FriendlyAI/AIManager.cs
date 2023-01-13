@@ -9,7 +9,7 @@ public class AIManager : CharacterManager
     public NavMeshAgent navMeshAgent;
     public AIState currentState;
     public bool interruptedByPlayer;
-
+    public CharacterLocomotionManager locomotionManager;
 
     public bool isPerformingAction;
     public PlayerManager playerToInteractWith;
@@ -22,6 +22,7 @@ public class AIManager : CharacterManager
         base.Awake();
         rigidbody = GetComponent<Rigidbody>();
         navMeshAgent = GetComponentInChildren<NavMeshAgent>();
+        locomotionManager = GetComponent<CharacterLocomotionManager>();
     }
     protected override void FixedUpdate()
     {
@@ -30,7 +31,6 @@ public class AIManager : CharacterManager
     private void Start()
     {
         navMeshAgent.enabled = false;
-        rigidbody.isKinematic = false;
     }
     private void Update()
     {

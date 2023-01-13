@@ -56,9 +56,16 @@ public class FisherAIState : AIState
             }
 
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            aiCharacter.transform.rotation = Quaternion.Slerp(aiCharacter.transform.rotation, targetRotation, aiCharacter.rotationSpeed / Time.deltaTime);
+            //aiCharacter.transform.rotation = Quaternion.Slerp(aiCharacter.transform.rotation, targetRotation, aiCharacter.rotationSpeed / Time.deltaTime);
+            PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
 
-            if(aiCharacter.transform.rotation==targetRotation)
+            // Build the CharacterInputs struct
+            characterInputs.MoveAxisForward = 0f;
+            characterInputs.CameraRotation = Quaternion.Slerp(aiCharacter.transform.rotation, targetRotation, aiCharacter.rotationSpeed / Time.deltaTime);
+            // Apply inputs to character
+            aiCharacter.locomotionManager.SetInputs(ref characterInputs);
+
+        if (aiCharacter.transform.rotation==targetRotation)
             {
             return true;
             }

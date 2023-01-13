@@ -58,22 +58,30 @@ public class PlayerSoundFXManager : CharacterSoundFXManager
     public void PlayFootstep()
     {
         terrainChecker.GetTerrainTexture();
-        if (terrainChecker.textureValues[0] > 0)
+        if(terrainChecker.movingOnTerrain)
         {
-            footStepSource.PlayOneShot(GetClip(stoneClips), terrainChecker.textureValues[0]);
+            if (terrainChecker.textureValues[0] > 0)
+            {
+                footStepSource.PlayOneShot(GetClip(stoneClips), terrainChecker.textureValues[0]);
+            }
+            if (terrainChecker.textureValues[1] > 0)
+            {
+                footStepSource.PlayOneShot(GetClip(grassClips), terrainChecker.textureValues[1]);
+            }
+            if (terrainChecker.textureValues[2] > 0)
+            {
+                footStepSource.PlayOneShot(GetClip(dirtClips), terrainChecker.textureValues[2]);
+            }
+            if (terrainChecker.textureValues[3] > 0)
+            {
+                footStepSource.PlayOneShot(GetClip(sandClips), terrainChecker.textureValues[3]);
+            }
         }
-        if (terrainChecker.textureValues[1] > 0)
+        else
         {
-            footStepSource.PlayOneShot(GetClip(grassClips), terrainChecker.textureValues[1]);
+
         }
-        if (terrainChecker.textureValues[2] > 0)
-        {
-            footStepSource.PlayOneShot(GetClip(dirtClips), terrainChecker.textureValues[2]);
-        }
-        if (terrainChecker.textureValues[3] > 0)
-        {
-            footStepSource.PlayOneShot(GetClip(sandClips), terrainChecker.textureValues[3]);
-        }
+        
     }
     AudioClip GetClip(AudioClip[] clipArray)
     {

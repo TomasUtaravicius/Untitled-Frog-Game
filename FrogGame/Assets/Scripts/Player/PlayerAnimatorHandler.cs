@@ -79,7 +79,7 @@ public class PlayerAnimatorHandler : CharacterAnimatorHandler
     
     private void OnAnimatorMove()
     {
-        if(character.isInteracting == false)
+        if(!character.isInteracting)
         {
             return;
         }

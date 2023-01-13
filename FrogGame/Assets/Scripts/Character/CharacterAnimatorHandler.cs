@@ -15,6 +15,8 @@ public class CharacterAnimatorHandler : MonoBehaviour
     bool handIKWeightsReset = false;
     bool headLookWeightReset = false;
     public HeadLookIKTarget lookTarget;
+    int vertical;
+    int horizontal;
     protected virtual void Awake()
     {
         character = GetComponent<CharacterManager>();
@@ -200,6 +202,80 @@ public class CharacterAnimatorHandler : MonoBehaviour
         headLookContraint.weight = 0;
         chestLookContraint.weight = 0;
         chestLookContraint.weight = 0;
+    }
+    public void UpdateAnimatorValues(float verticalMovement, float horizontalMovement, bool isSprinting)
+    {
+        #region Vertical
+        float v = 0;
+
+        if (verticalMovement > 0 && verticalMovement < 0.55f)
+        {
+            v = 0.5f;
+        }
+        else if (verticalMovement > 0.55f)
+        {
+            v = 1f;
+        }
+        else if (verticalMovement < 0 && verticalMovement > -0.55f)
+        {
+            v = -0.5f;
+        }
+        else if (verticalMovement < -0.55f)
+        {
+            v = -1f;
+        }
+        else
+        {
+            v = 0f;
+        }
+        #endregion
+
+        #region Horizontal
+        float h = 0;
+
+        if (horizontalMovement > 0 && horizontalMovement < 0.55f)
+        {
+            h = 0.5f;
+        }
+        else if (horizontalMovement > 0.55f)
+        {
+            h = 1f;
+        }
+        else if (horizontalMovement < 0 && horizontalMovement > -0.55f)
+        {
+            h = -0.5f;
+        }
+        else if (horizontalMovement < -0.55f)
+        {
+            h = -1f;
+        }
+        else
+        {
+            h = 0f;
+        }
+        #endregion
+
+        if (isSprinting)
+        {
+            v = 2;
+            h = horizontalMovement;
+        }
+        character.animator.SetFloat("Vertical", v, 0.1f, Time.deltaTime);
+        character.animator.SetFloat("Horizontal", h, 0.1f, Time.deltaTime);
+    }
+
+
+    private void OnAnimatorMove()
+    {
+        if (!character.isInteracting)
+        {
+            return;
+        }
+
+        float delta = Time.fixedDeltaTime;
+        Vector3 deltaPosition = character.animator.deltaPosition;
+        Vector3 velocity = deltaPosition / delta;
+        //character..AddVelocity(velocity);
     }
 
 

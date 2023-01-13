@@ -14,12 +14,12 @@ public class AIAnimatorHandler : CharacterAnimatorHandler
     {
         float delta = Time.deltaTime;
         aiCharacter.rigidbody.drag = 0;
-        Vector3 deltaPosition = base.character.animator.deltaPosition;
+        Vector3 deltaPosition = character.animator.deltaPosition;
         deltaPosition.y = 0;
         Vector3 velocity = deltaPosition / delta;
         aiCharacter.rigidbody.velocity = velocity;
 
-        if (base.character.isRotatingWithRootMotion)
+        if (character.isRotatingWithRootMotion)
         {
             aiCharacter.transform.rotation *= aiCharacter.animator.deltaRotation;
         }

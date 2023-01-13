@@ -54,13 +54,26 @@ public class WalkToLocationState: AIState
                 aiCharacter.navMeshAgent.enabled = true;
                 aiCharacter.navMeshAgent.destination = walkLocation.position;
                 Quaternion targetRotation = Quaternion.Lerp(aiCharacter.transform.rotation, aiCharacter.navMeshAgent.transform.rotation, 0.5f);
-                aiCharacter.transform.rotation = targetRotation;
-                aiCharacter.animator.SetFloat("Vertical", 0.5f, 0.2f, Time.deltaTime);
+                //aiCharacter.transform.rotation = targetRotation;
+                PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
+
+                // Build the CharacterInputs struct
+                characterInputs.MoveAxisForward = 0.5f;
+                characterInputs.CameraRotation = targetRotation;
+                // Apply inputs to character
+                aiCharacter.locomotionManager.SetInputs(ref characterInputs);
+                
+                //aiCharacter.animator.SetFloat("Vertical", 0.5f, 0.2f, Time.deltaTime);
             }
             else
             {
                 aiCharacter.navMeshAgent.enabled = false;
-                aiCharacter.animator.SetFloat("Vertical", 0f, 0.2f, Time.deltaTime);
+                PlayerCharacterInputs characterInputs = new PlayerCharacterInputs();
+
+                // Build the CharacterInputs struct
+                characterInputs.MoveAxisForward = 0f;
+                // Apply inputs to character
+                aiCharacter.locomotionManager.SetInputs(ref characterInputs);
                 return interactState;
             }
         }
